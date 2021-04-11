@@ -79,7 +79,46 @@ if r.status_code == 200:
         workbook_title = "Cisco-DNA-Lab.xlsx"
         workbook = xlsxwriter.Workbook(workbook_title)
         worksheet = workbook.add_worksheet("Cisco DNA AO Lab")
-        worksheet.set_column("$A:$I", 20)
+        worksheet_range = "$A:$I"
+        worksheet.set_column(worksheet_range, 20)
+        # Green Format
+        green_format = workbook.add_format(
+            {
+                "border": True,
+                "align": "center",
+                "valign": "vcenter",
+                "font_color": "#006100",
+                "bg_color": "#C6EFCE",
+            }
+        )
+        worksheet.conditional_format(
+            "I2:I361386",
+            {
+                "type": "text",
+                "criteria": "containing",
+                "value": "Reachable",
+                "format": green_format,
+            },
+        )
+        # Red Format
+        red_format = workbook.add_format(
+            {
+                "border": True,
+                "align": "center",
+                "valign": "vcenter",
+                "font_color": "#9C0006",
+                "bg_color": "#FFC7CE",
+            }
+        )
+        worksheet.conditional_format(
+            "I2:I361386",
+            {
+                "type": "text",
+                "criteria": "containing",
+                "value": "Unreachable",
+                "format": red_format,
+            },
+        )
 
         # Set xlsx file properties
         workbook.set_properties(
@@ -140,25 +179,6 @@ if r.status_code == 200:
             }
         )
 
-        success_cell_format = workbook.add_format(
-            {
-                "border": True,
-                "align": "center",
-                "valign": "vcenter",
-                "font_color": "#006100",
-                "bg_color": "#C6EFCE",
-            }
-        )
-        error_cell_format = workbook.add_format(
-            {
-                "border": True,
-                "align": "center",
-                "valign": "vcenter",
-                "font_color": "#9C0006",
-                "bg_color": "#FFC7CE",
-            }
-        )
-
         # Row and Column initial values
         row = 1
         col = 0
@@ -166,7 +186,14 @@ if r.status_code == 200:
         # Save each device in a seperate row
         for data in payload["response"]:
             worksheet.write(row, col, row, cell_format)
-            worksheet.write(row, col, data["hostname"], cell_format)
+            worksheet.write(
+                row,
+                col,
+                data["hostname"],
+                workbook.add_format(
+                    {"border": True, "align": "left", "valign": "vcenter"}
+                ),
+            )
             worksheet.write(row, col + 1, data["managementIpAddress"], cell_format)
             worksheet.write(
                 row, col + 2, data["serialNumber"], serial_number_cell_format
@@ -174,22 +201,25 @@ if r.status_code == 200:
             worksheet.write(row, col + 3, data["macAddress"], mac_addr_cell_format)
             worksheet.write(row, col + 4, data["platformId"], cell_format)
             worksheet.write(row, col + 5, data["softwareVersion"], cell_format)
-            worksheet.write(row, col + 6, data["role"], cell_format)
+            worksheet.write(row, col + 6, data["role"].title(), cell_format)
             worksheet.write(row, col + 7, data["upTime"].split(",", 1)[0], cell_format)
-            if data["reachabilityStatus"] == "Reachable":
-                worksheet.write(
-                    row, col + 8, data["reachabilityStatus"], success_cell_format
-                )
-            else:
-                worksheet.write(
-                    row, col + 8, data["reachabilityStatus"], error_cell_format
-                )
+            worksheet.write(row, col + 8, data["reachabilityStatus"], cell_format)
+            worksheet.write(row, col + 8, data["reachabilityStatus"], cell_format)
 
             row += 1
 
         # Open workbook
         while True:
             try:
+                # Highlight alternate row
+                worksheet.conditional_format(
+                    "A2:I361386",
+                    {
+                        "type": "formula",
+                        "criteria": '=AND(ISEVEN(ROW()),A2<>"")',
+                        "format": workbook.add_format({"bg_color": "#F2F2F2"}),
+                    },
+                )
                 workbook.close()
                 print(f"✔ {workbook_title} file is created successfully!")
                 print(f"✔ Opening {workbook_title} ... please wait. ✔")
