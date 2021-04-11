@@ -198,7 +198,7 @@ if r.status_code == 200:
             except xlsxwriter.exceptions.FileCreateError as e:
                 print(
                     f"❌ Exception caught in workbook.close(): {e}\n"
-                    "❕ Please close the file if it is open in Excel.\n"
+                    "❕ Please close the file if it is open in Excel or used by another program."
                 )
             break
     elif r.status_code == 204:
