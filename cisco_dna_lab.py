@@ -92,7 +92,7 @@ if r.status_code == 200:
             }
         )
         worksheet.conditional_format(
-            "I2:I361386",
+            "I2:I1048576",
             {
                 "type": "text",
                 "criteria": "containing",
@@ -111,7 +111,7 @@ if r.status_code == 200:
             }
         )
         worksheet.conditional_format(
-            "I2:I361386",
+            "I2:I1048576",
             {
                 "type": "text",
                 "criteria": "containing",
@@ -213,7 +213,7 @@ if r.status_code == 200:
             try:
                 # Highlight alternate row
                 worksheet.conditional_format(
-                    "A2:I361386",
+                    "A2:I1048576",
                     {
                         "type": "formula",
                         "criteria": '=AND(ISEVEN(ROW()),A2<>"")',
