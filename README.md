@@ -1,8 +1,6 @@
 # Cisco DNA AO Lab Devices
 
-This program is designed to get Cisco DNA Center AO Lab devices and save them to an xlsx sheet.
-
----
+This program is designed to get Cisco DNA Center AO Lab devices and save them to an `xlsx` sheet.
 
 ## Table of Contents
 
@@ -13,8 +11,10 @@ This program is designed to get Cisco DNA Center AO Lab devices and save them to
 
 ## Installation
 
-```python3
-pip install -r requirements.txt
+```bash
+$ git clone https://github.com/Tes3awy/Cisco-DNA-AO-Lab-Devices.git
+$ cd Cisco-DNA-AO-Lab-Devices
+$ pip install -r requirements.txt
 ```
 
 ## Usage
@@ -23,9 +23,9 @@ pip install -r requirements.txt
 python cisco_dna_lab.py
 ```
 
-Voila! The xlsx file is automatically created for the devices on Cisco DNA Center AO Lab.
+Voila :sparkles:! The `xlsx` file is automagically created for the devices on Cisco DNA Center AO Lab.
 
-> The xlsx file opens immediately upon creation.
+> The `xlsx` file opens immediately upon creation.
 
 ## Collected Data from Response
 
@@ -38,6 +38,29 @@ Voila! The xlsx file is automatically created for the devices on Cisco DNA Cente
 7. Role
 8. Up Time _(In Days)_
 9. Reachability Status
+
+## Use it for your DNA Center
+
+This program is ready to be used for your deployed DNA Center. You need to provide your appropriate credentials.
+
+Create a `credentials.py` file and store your secret data within.
+
+> The `credentials.py` file should neither be committed nor pushed to any remote repos.
+
+**Example:**
+
+```bash
+touch credentials.py
+```
+
+Open `credentials.py` and add:
+
+```python
+base_url = "https://10.10.1.1" # without a trailing slash (/)
+username = "root"
+password = "CiscoAdmin!2345"
+ssl_certificate = False
+```
 
 ## Preview
 
