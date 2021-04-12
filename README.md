@@ -7,7 +7,8 @@ This program is designed to get Cisco DNA Center AO Lab devices and save them to
 1. [Installation](#installation)
 2. [Usage](#usage)
 3. [Collected Data from Response](#collected-data)
-4. [Preview](#preview)
+4. [Use it for your DNA Center](#use-it-for-your-dna-center)
+5. [Preview](#preview)
 
 ## Installation
 
