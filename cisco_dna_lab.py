@@ -23,15 +23,20 @@ import xlsxwriter
 import datetime
 import time
 import webbrowser
+import urllib3
+from credentials import base_url, username, password, ssl_certificate
+
+# Disable warnings when ssl_certificate = False
+urllib3.disable_warnings()
 
 # DNA Center AO Lab
-base_url = "https://sandboxdnac.cisco.com/dna/"
-username = "devnetuser"
-password = "Cisco123!"
-ssl_certificate = True
+BASE_URL = base_url if base_url != "" else "https://sandboxdnac.cisco.com"
+USERNAME = username if username != "" else "devnetuser"
+PASSWORD = password if password != "" else "Cisco123!"
+SSL_CERTIFICATE = ssl_certificate if ssl_certificate != "" else True
 
 # Generate Base64 string for authentication
-auth_string = f"{username}:{password}"
+auth_string = f"{USERNAME}:{PASSWORD}"
 auth_string = auth_string.encode("ascii")
 auth_string = base64.b64encode(auth_string)
 auth_string = auth_string.decode("utf-8")
@@ -45,9 +50,9 @@ headers = {
 }
 r = requests.request(
     "POST",
-    f"{base_url}system/api/v1/auth/token/",
+    f"{BASE_URL}/dna/system/api/v1/auth/token/",
     headers=headers,
-    verify=ssl_certificate,
+    verify=SSL_CERTIFICATE,
 )
 
 # Check the POST response status code
@@ -64,9 +69,9 @@ if r.status_code == 200:
     }
     r = requests.request(
         "GET",
-        f"{base_url}intent/api/v1/network-device/",
+        f"{BASE_URL}/dna/intent/api/v1/network-device/",
         headers=headers,
-        verify=ssl_certificate,
+        verify=SSL_CERTIFICATE,
     )
     # Check the GET request status code
     if r.status_code == 200:
@@ -185,7 +190,6 @@ if r.status_code == 200:
 
         # Save each device in a seperate row
         for data in payload["response"]:
-            worksheet.write(row, col, row, cell_format)
             worksheet.write(
                 row,
                 col,
