@@ -34,7 +34,7 @@ ssl_certificate = True
 auth_string = f"{username}:{password}"
 auth_string = auth_string.encode("ascii")
 auth_string = base64.b64encode(auth_string)
-auth_string = str(auth_string, "utf-8")
+auth_string = auth_string.decode("utf-8")
 auth_string = f"Basic {auth_string}"
 
 # POST: Get Auth Token from DNA Center AO Lab API
