@@ -74,3 +74,5 @@ $RECYCLE.BIN/
 devices.json
 Cisco-DNA-Lab.xlsx
 [~$]*.xlsx
+credentials.py
+__pycache__
