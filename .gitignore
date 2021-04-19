@@ -71,8 +71,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # PWD files
-devices.json
-Cisco-DNA-Lab.xlsx
-[~$]*.xlsx
-credentials.py
+*.xlsx
 __pycache__
+#credentials.py
