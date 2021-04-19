@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-# --------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 #
-# Demonstrates how to get Cisco DNA Center AO Lab devices and save them to an xlsx sheet
+# Demonstrates how to get Cisco DNA Center AO Labs devices and save them to an xlsx sheet
 #
 # (C) 2021 Osama Abbas, Cairo, Egypt
 # Released under MIT License
@@ -10,10 +10,10 @@
 # Filename: cisco_dna_lab.py
 # Version: Python 3.9.4
 # Authors: Osama Abbas (oabbas2512@gmail.com)
-# Description:   This program is designed to get Cisco DNA Center AO Lab devices and
+# Description:   This program is designed to get Cisco DNA Center AO Labs devices and
 #                save them to an xlsx sheet.
 #
-# --------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 
 import os
 import requests
@@ -22,14 +22,15 @@ import json
 import xlsxwriter
 import datetime
 import time
-import webbrowser
+import webbrowser as xlsxviewer
 import urllib3
+
 from credentials import base_url, username, password, ssl_certificate
 
 # Disable warnings when ssl_certificate = False
 urllib3.disable_warnings()
 
-# DNA Center AO Lab
+# DNA Center AO Lab (Defaults to Cisco DNA Center AO 1.3.1.4 if credentials.py vars are empty)
 BASE_URL = base_url if base_url != "" else "https://sandboxdnac.cisco.com"
 USERNAME = username if username != "" else "devnetuser"
 PASSWORD = password if password != "" else "Cisco123!"
@@ -81,10 +82,13 @@ if r.status_code == 200:
         payload = json.loads(r.text)
 
         # Create xlsx file
-        workbook_title = "Cisco-DNA-Lab.xlsx"
+        today = datetime.date.today()
+        workbook_title = (
+            f"{BASE_URL.replace('https://', '')}-DNA-Center_{str(today)}.xlsx"
+        )
         workbook = xlsxwriter.Workbook(workbook_title)
-        worksheet = workbook.add_worksheet("Cisco DNA AO Lab")
-        worksheet_range = "$A:$I"
+        worksheet = workbook.add_worksheet(BASE_URL.replace("https://", ""))
+        worksheet_range = "$A:$J"
         worksheet.set_column(worksheet_range, 20)
         # Green Format
         green_format = workbook.add_format(
@@ -97,7 +101,7 @@ if r.status_code == 200:
             }
         )
         worksheet.conditional_format(
-            "I2:I1048576",
+            "J2:J1048576",
             {
                 "type": "text",
                 "criteria": "containing",
@@ -116,7 +120,7 @@ if r.status_code == 200:
             }
         )
         worksheet.conditional_format(
-            "I2:I1048576",
+            "J2:J1048576",
             {
                 "type": "text",
                 "criteria": "containing",
@@ -125,15 +129,15 @@ if r.status_code == 200:
             },
         )
 
-        # Set xlsx file properties
+        # Set xlsx file propertiess
         workbook.set_properties(
             {
-                "title": "Cisco DNA AO Lab",
+                "title": BASE_URL.replace("https://", ""),
                 "subject": "Cisco DNA AO Lab with Python",
                 "author": "Osama Abbas",
                 "category": "Technology",
                 "keywords": "Cisco, DevNet",
-                "created": datetime.date.today(),
+                "created": today,
                 "comments": "Created with Python and XlsxWriter",
             }
         )
@@ -156,10 +160,11 @@ if r.status_code == 200:
         worksheet.write_string("C1", "Serial Number", header_cell_format)
         worksheet.write_string("D1", "Mac Address", header_cell_format)
         worksheet.write_string("E1", "Platform ID", header_cell_format)
-        worksheet.write_string("F1", "Software Version", header_cell_format)
+        worksheet.write_string("F1", "IOS Version", header_cell_format)
         worksheet.write_string("G1", "Role", header_cell_format)
         worksheet.write_string("H1", "Up Time", header_cell_format)
-        worksheet.write_string("I1", "Reachability", header_cell_format)
+        worksheet.write_string("I1", "Last Updated", header_cell_format)
+        worksheet.write_string("J1", "Reachability", header_cell_format)
 
         # Entry cells format
         cell_format = workbook.add_format(
@@ -206,9 +211,9 @@ if r.status_code == 200:
             worksheet.write(row, col + 4, data["platformId"], cell_format)
             worksheet.write(row, col + 5, data["softwareVersion"], cell_format)
             worksheet.write(row, col + 6, data["role"].title(), cell_format)
-            worksheet.write(row, col + 7, data["upTime"].split(",", 1)[0], cell_format)
-            worksheet.write(row, col + 8, data["reachabilityStatus"], cell_format)
-            worksheet.write(row, col + 8, data["reachabilityStatus"], cell_format)
+            worksheet.write(row, col + 7, data["upTime"], cell_format)
+            worksheet.write(row, col + 8, data["lastUpdated"], cell_format)
+            worksheet.write(row, col + 9, data["reachabilityStatus"], cell_format)
 
             row += 1
 
@@ -217,7 +222,7 @@ if r.status_code == 200:
             try:
                 # Highlight alternate row
                 worksheet.conditional_format(
-                    "A2:I1048576",
+                    "A2:J1048576",
                     {
                         "type": "formula",
                         "criteria": '=AND(ISEVEN(ROW()),A2<>"")',
@@ -226,12 +231,12 @@ if r.status_code == 200:
                 )
                 workbook.close()
                 print(f"✔ {workbook_title} file is created successfully!")
-                print(f"✔ Opening {workbook_title} ... please wait. ✔")
+                print(f"✔ Opening {workbook_title}, please wait ...")
                 time.sleep(1)
-                webbrowser.open(os.path.join(workbook_title))
+                xlsxviewer.open(os.path.join(workbook_title))
             except xlsxwriter.exceptions.FileCreateError as e:
                 print(
-                    f"❌ Exception caught in workbook.close(): {e}\n"
+                    f"✖ Exception caught in workbook.close(): {e}\n"
                     "❕ Please close the file if it is open in Excel or used by another program."
                 )
             break
@@ -242,10 +247,10 @@ if r.status_code == 200:
             "❕ The GET request included a Range Header, and the server responded with the partial content matching the range."
         )
     elif r.status_code == 400:
-        print("❌ The client made a request that the server could not understand.")
+        print("✖ The client made a request that the server could not understand.")
     elif r.status_code == 401:
         print(
-            "❌ The client's authentication credentials included with the request are missing or invalid."
+            "✖ The client's authentication credentials included with the request are missing or invalid."
         )
     elif r.status_code == 403:
         print(
@@ -256,16 +261,16 @@ if r.status_code == 200:
             "❕ The client made a request for a resource that does not exist. Please check the URLs."
         )
     elif r.status_code == 409:
-        print("❌ The target resource is in a conflicted state.")
+        print("✖ The target resource is in a conflicted state.")
     elif r.status_code == 415:
         print(
-            "❌ The client sent a request body in a format that the server does not support."
+            "✖ The client sent a request body in a format that the server does not support."
         )
     elif r.status_code == 500:
-        print("❌ The server could not fulfill the request.")
+        print("✖ The server could not fulfill the request.")
     elif r.status_code == 501:
         print(
-            "❌ The server has not implemented the functionality required to fulfill the request."
+            "✖ The server has not implemented the functionality required to fulfill the request."
         )
     elif r.status_code == 503:
         print("❕ The server is (temporarily) unavailable.")
@@ -273,4 +278,4 @@ if r.status_code == 200:
         print("❕ The server did not respond inside time restrictions and timed-out.")
 
 else:
-    print("❌ Invalid Credentials.")
+    print("✖ Invalid Credentials.")
