@@ -1,6 +1,6 @@
-# Cisco DNA AO Lab Devices
+# Cisco DNA Center Device List
 
-This program is designed to get Cisco DNA Center AO Lab devices and save them to an `xlsx` sheet.
+This program is designed to get a Cisco DNA Center device list and save them to an Excel sheet.
 
 ## Table of Contents
 
@@ -51,7 +51,7 @@ Then run:
 python main.py
 ```
 
-Voila :sparkles:! The Excel file is automatically created for the device list on DNA Center.
+Voila :sparkles:! The Excel file is created automatically for the device list on Cisco DNA Center.
 
 > The Excel file opens immediately upon creation.
 
