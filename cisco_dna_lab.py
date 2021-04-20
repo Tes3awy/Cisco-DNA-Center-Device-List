@@ -237,45 +237,45 @@ if r.status_code == 200:
             except xlsxwriter.exceptions.FileCreateError as e:
                 print(
                     f"✖ Exception caught in workbook.close(): {e}\n"
-                    "❕ Please close the file if it is open in Excel or used by another program."
+                    f"❕ Please close '{workbook_title}' if it is already open in Excel or in use by another program."
                 )
             break
     elif r.status_code == 204:
-        print("❕ The request was successful, however no content was returned.")
+        print(f"❕ Status code:{r.status_code}. The request was successful, however no content was returned.")
     elif r.status_code == 206:
         print(
-            "❕ The GET request included a Range Header, and the server responded with the partial content matching the range."
+            f"❕ Status code:{r.status_code}. The GET request included a Range Header, and the server responded with the partial content matching the range."
         )
     elif r.status_code == 400:
-        print("✖ The client made a request that the server could not understand.")
+        print(f"✖ Status code:{r.status_code}. The client made a request that the server could not understand.")
     elif r.status_code == 401:
         print(
-            "✖ The client's authentication credentials included with the request are missing or invalid."
+            f"✖  Status code:{r.status_code}.The client's authentication credentials included with the request are missing or invalid."
         )
     elif r.status_code == 403:
         print(
-            "❕ The server recognizes the authentication credentials, but the client is not authorized to perform this request."
+            f"❕ Status code:{r.status_code}. The server recognizes the authentication credentials, but the client is not authorized to perform this request."
         )
     elif r.status_code == 404:
         print(
-            "❕ The client made a request for a resource that does not exist. Please check the URLs."
+            f"❕ Status code:{r.status_code}. The client made a request for a resource that does not exist. Please check the URLs."
         )
     elif r.status_code == 409:
-        print("✖ The target resource is in a conflicted state.")
+        print(f"✖ Status code:{r.status_code}. The target resource is in a conflicted state.")
     elif r.status_code == 415:
         print(
-            "✖ The client sent a request body in a format that the server does not support."
+            f"✖ Status code:{r.status_code}. The client sent a request body in a format that the server does not support."
         )
     elif r.status_code == 500:
-        print("✖ The server could not fulfill the request.")
+        print(f"✖ Status code:{r.status_code}. The server could not fulfill the request.")
     elif r.status_code == 501:
         print(
-            "✖ The server has not implemented the functionality required to fulfill the request."
+            f"✖ Status code:{r.status_code}. The server has not implemented the functionality required to fulfill the request."
         )
     elif r.status_code == 503:
-        print("❕ The server is (temporarily) unavailable.")
+        print(f"❕ Status code:{r.status_code}. The server is (temporarily) unavailable.")
     else:
-        print("❕ The server did not respond inside time restrictions and timed-out.")
+        print(f"❕ Status code:{r.status_code}. The server did not respond inside time restrictions and timed-out.")
 
 else:
-    print("✖ Invalid Credentials.")
+    print(f"✖ Status code:{r.status_code}. Invalid Credentials.")
