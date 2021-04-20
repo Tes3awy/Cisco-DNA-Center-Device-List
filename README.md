@@ -17,8 +17,8 @@ This program is designed to get a Cisco DNA Center device list and save them to 
 ### Installation
 
 ```bash
-$ git clone https://github.com/Tes3awy/Cisco-DNA-AO-Lab-Devices.git
-$ cd Cisco-DNA-AO-Lab-Devices
+$ git clone https://github.com/Tes3awy/Cisco-DNA-Center-Device-List.git
+$ cd Cisco-DNA-Center-Device-List
 $ pip install -r requirements.txt
 ```
 
