@@ -23,65 +23,72 @@ $ pip install -r requirements.txt
 ### Getting Started
 
 ```bash
-│   cisco_dna_lab.py
+│   main.py
+│   get_auth_token.py
+│   get_device_list.py
+│   export_device_list.py
 │   credentials.py
 │   requirements.txt
-│   .gitignore
 │   README.md
+│   .gitignore
 │   LICENSE
 │
 └───assets
         preview.png
-
 ```
 
-Once the repo is cloned, please open `.gitignore` and uncomment `credentials.py`.
+Once you clone the repo, please open `.gitignore` and uncomment `credentials.py`.
+
+> The `credentials.py` file should **NEVER** be committed nor pushed to any remote repos. _(The `credentials.py` in this repo is the `Cisco AO Lab 2.1.2.5` which is a public and free to use lab.)_
 
 ### Usage
 
+You need to provide your DNA Center credentials in `credentials.py` file.
+
+Then run:
+
 ```python3
-python cisco_dna_lab.py
+python main.py
 ```
 
-Voila :sparkles:! The `xlsx` file is automatically created for the devices on Cisco DNA Center AO Lab.
+Voila :sparkles:! The Excel file is automatically created for the device list on DNA Center.
 
-> The `xlsx` file opens immediately upon creation.
+> The Excel file opens immediately upon creation.
 
-> `XlsxWriter` doesn't give you the option to append new data. So every time a request is made, the `xlsx` file will be overwritten.
+> `XlsxWriter` does not give you the option to append new data to a created file. So every time a request is sent, the Excel file will be overwritten.
 
 ### Collected Data from Response
 
 1. Hostname
-2. Management IP Address
-3. Serial Number
-4. Mac Address
-5. Platform ID _(Device Model)_
-6. Software Version
-7. Role
-8. Up Time
-9. Last Update
-10. Reachability Status
+2. Device ID
+3. Management IP Address
+4. Serial Number
+5. Mac Address
+6. Platform ID _(Device Model)_
+7. Software Version
+8. Role
+9. Up Time
+10. Last Update
+11. Reachability Status
 
 ### Use it for your DNA Center
 
-This program is ready to be used for your deployed DNA Center. You need to provide your appropriate credentials.
-
-> The `credentials.py` file should **NEVER** be committed nor pushed to any remote repos. _(The one in this repo is the `Cisco AO Lab 2.1.2.5` which is a public and free to use Lab.)_
+This program is ready to be used for your deployed DNA Center.
 
 **Example:**
 
 `credentials.py`
 
 ```python
-base_url = "https://10.10.1.1" # without a trailing slash (/)
-username = "root"
-password = "CiscoAdmin!2345"
-ssl_certificate = False
+BASE_URL = "https://10.10.1.1" # without a trailing slash (/)
+USERNAME = "root"
+PASSWORD = "CiscoAdmin!2345"
+SSL_CERTIFICATE = False # set to True if you have a valid certificate
 ```
 
 ### References
 
-**APIs**
+**APIs List**
 
 [DNA Center Platform](https://developer.cisco.com/docs/dna-center/#!authentication-api)
 
