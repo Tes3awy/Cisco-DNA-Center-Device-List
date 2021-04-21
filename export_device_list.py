@@ -5,11 +5,16 @@ import xlsxwriter
 import datetime
 import time
 import webbrowser as xlsxviewer
+from colorama import init
+from termcolor import colored
 
 from credentials import BASE_URL
 
+# use Colorama to make Termcolor work on Windows too
+init(autoreset=True)
+
 # Export device list to Excel sheet
-def export_device_list(devices):
+def export_device_list(devices: list):
 
     # Vars
     today = datetime.date.today()
@@ -171,13 +176,21 @@ def export_device_list(devices):
     while True:
         try:
             workbook.close()
-            print(f"'{workbook_title}' Excel file is created successfully!")
-            print(f"Opening '{workbook_title}', please wait ...\n")
+            print(colored("export_device_list:", "magenta"))
+            print(
+                colored(
+                    f"'{workbook_title}' Excel file is created successfully!", "cyan"
+                )
+            )
+            print(colored(f"Opening '{workbook_title}', please wait ...\n", "cyan"))
             time.sleep(1)
             xlsxviewer.open(os.path.abspath(workbook_title))
         except xlsxwriter.exceptions.FileCreateError as err:
             raise SystemExit(
-                f"Exception caught in workbook.close(): {err}\n"
-                f"Please close '{workbook_title}' file if it is already open in Microsoft Excel or in use by another program."
+                colored(
+                    f"Exception caught in workbook.close(): {err}\n"
+                    f"Please close '{workbook_title}' file if it is already open in Microsoft Excel or in use by another program.",
+                    "red",
+                )
             )
         break
