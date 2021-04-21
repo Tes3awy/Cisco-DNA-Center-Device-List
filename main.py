@@ -19,17 +19,21 @@
 from get_auth_token import get_auth_token
 from get_device_list import get_device_list
 from export_device_list import export_device_list
+from export_device_config import export_device_config
 
 
 def main():
-    # obtain the Cisco DNA Center Auth Token
+    # Obtain the Cisco DNA Center Auth Token
     token = get_auth_token()
 
-    # obtain devices on Cisco DNA Center
+    # Obtain devices on Cisco DNA Center
     devices = get_device_list(token)
 
     # Export devices to Excel sheet
     export_device_list(devices)
+
+    # Export device configs
+    export_device_config(token)
 
 
 if __name__ == "__main__":

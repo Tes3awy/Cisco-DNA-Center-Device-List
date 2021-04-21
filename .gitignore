@@ -73,4 +73,5 @@ $RECYCLE.BIN/
 # PWD files
 *.xlsx
 __pycache__
+configs
 #credentials.py
