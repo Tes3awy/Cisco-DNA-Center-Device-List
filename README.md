@@ -1,8 +1,8 @@
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/Tes3awy/Cisco-DNA-Center-Device-List)
 
-# Cisco DNA Center Device List
+# Cisco DNA Center Device List and Device Config
 
-This program is designed to get a Cisco DNA Center device list and save them to an Excel sheet.
+This program is designed to export a Cisco DNA Center device list and save them to an Excel sheet and device configs and save them to text file.
 
 ## Table of Contents
 
@@ -29,6 +29,7 @@ $ pip install -r requirements.txt
 │   get_auth_token.py
 │   get_device_list.py
 │   export_device_list.py
+│   export_device_config.py
 │   credentials.py
 │   requirements.txt
 │   README.md
@@ -41,7 +42,7 @@ $ pip install -r requirements.txt
 
 Once you clone the repo, please open `.gitignore` and uncomment `credentials.py`.
 
-> The `credentials.py` file should **NEVER** be committed nor pushed to any remote repos. _(The `credentials.py` in this repo is the `Cisco AO Lab 2.1.2.5` which is a public and free to use lab.)_
+> The `credentials.py` file should **NEVER** be committed nor pushed to any remote repos. _(The `credentials.py` in this repo is the `Cisco AO Lab 2.1.2.5` that is a free to lab.)_
 
 ### Usage
 
@@ -53,11 +54,11 @@ Then run:
 python main.py
 ```
 
-Voila :sparkles:! The Excel file is created automatically for the device list on Cisco DNA Center.
+Voila :sparkles:! The Excel file is created automatically for the device list on Cisco DNA Center and configuration files of those devices are created in `configs/<device_hostname>.txt`.
 
 > The Excel file opens immediately upon creation.
 
-> `XlsxWriter` does not give you the option to append new data to a created file. So every time a request is sent, the Excel file will be overwritten.
+> `XlsxWriter` does not give you the option to append new data to a created file. So every time you send a request, the Excel file will be overwritten. You should close the Excel program before sending any new requests.
 
 ### Collected Data from Response
 
