@@ -1,3 +1,4 @@
+import os
 import requests
 import urllib3
 import json
@@ -30,7 +31,7 @@ def get_network_health(token):
         )
         response.raise_for_status()
         print(
-            "The request was successful. The result is contained in the response body.\n"
+            "\nThe request was successful. The result is contained in the response body.\n"
         )
 
         health_distribution = response.json()["healthDistirubution"]
@@ -41,15 +42,25 @@ def get_network_health(token):
         # Values on y-axis
         health_score = list()
 
+        # Get values from healthDistirubution
         for value in health_distribution:
-            print(value)
             categories.append(value["category"])
             total_category_count.append(value["totalCount"])
             health_score.append(value["healthScore"])
 
+        # Figures DIR
+        NET_HEALTH_DIR = "net_health"
+        FIG_NAME = BASE_URL.replace("https://", "")
+
+        # Check if net_health exists
+        if not os.path.exists(NET_HEALTH_DIR):
+            os.makedirs(NET_HEALTH_DIR)
+
+        NET_HEALTH_FIG = os.path.join(NET_HEALTH_DIR, f"{FIG_NAME}.jpg")
+
         # Figure
         fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True, sharey=False)
-        fig.suptitle(f'{BASE_URL.replace("https://", "")}')
+        fig.suptitle(f"{FIG_NAME}")
         # Subplot #1
         ax1.bar(categories, health_score, width=0.35, color="green", alpha=0.65)
         ax1.set_title("Network Health")
@@ -57,12 +68,11 @@ def get_network_health(token):
         ax1.grid(True)
         # Subpolot #2
         ax2.bar(categories, total_category_count, width=0.35, color="#D0D0D0")
-        ax2.set_title("Count")
         ax2.set_ylabel("Count")
         ax2.grid(True)
-        # Show and save plot
-        plt.show()
-        plt.savefig(f'{BASE_URL.replace("https://", "")}.jpg', dpi=400)
+        # Save plot to net_health/*.jpg
+        plt.savefig(NET_HEALTH_FIG, dpi=300)
+        print(f"Please have a look at '{FIG_NAME}.jpg' in 'net_health' directory")
 
     except requests.exceptions.HTTPError as err:
         raise SystemExit(err)
