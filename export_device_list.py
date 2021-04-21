@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 import xlsxwriter
 import datetime
@@ -170,7 +172,7 @@ def export_device_list(devices):
         try:
             workbook.close()
             print(f"'{workbook_title}' Excel file is created successfully!")
-            print(f"Opening '{workbook_title}', please wait ...")
+            print(f"Opening '{workbook_title}', please wait ...\n")
             time.sleep(1)
             xlsxviewer.open(os.path.abspath(workbook_title))
         except xlsxwriter.exceptions.FileCreateError as err:

@@ -1,4 +1,5 @@
-# Get Auth Token
+#!/usr/bin/env python
+
 import requests
 from requests.auth import HTTPBasicAuth
 import json
@@ -7,7 +8,7 @@ import urllib3
 from credentials import BASE_URL, USERNAME, PASSWORD, SSL_CERTIFICATE
 
 # Disable SSL warnings. Not needed in production environments with valid certificates
-# (DON'T if you are not sure of its purpose)
+# (REMOVE if you are not sure of its purpose)
 urllib3.disable_warnings()
 
 
