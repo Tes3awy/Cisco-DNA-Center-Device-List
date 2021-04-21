@@ -51,7 +51,7 @@ def export_device_config(token):
             hostname = regex[index + 1]
             # Create a config file
             with open(os.path.join(DIR, f"{hostname}.txt"), "w") as config_file:
-                config_file.write(config["runningConfig"])
+                config_file.write(conf)
                 print(f"'{hostname}.txt' config file was created successfully!")
 
     except requests.exceptions.HTTPError as err:
