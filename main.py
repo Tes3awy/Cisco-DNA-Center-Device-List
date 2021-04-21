@@ -28,13 +28,13 @@ def main():
     token = get_auth_token()
 
     # Obtain devices on Cisco DNA Center
-    # devices = get_device_list(token)
+    devices = get_device_list(token)
 
     # Export devices to Excel sheet
-    # export_device_list(devices)
+    export_device_list(devices)
 
     # Export device configs
-    # export_device_config(token)
+    export_device_config(token)
 
     # Obtain network health
     get_network_health(token)
