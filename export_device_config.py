@@ -7,6 +7,7 @@ from requests.packages import urllib3
 import json
 from colorama import init
 from termcolor import colored
+from datetime import datetime
 
 from credentials import BASE_URL, SSL_CERTIFICATE
 
@@ -51,6 +52,9 @@ def export_device_config(token: str):
         if not os.path.exists(DIR):
             os.makedirs(DIR)
 
+        # Today's date
+        today = datetime.today().strftime("%Y-%m-%d")
+
         # Export a config file for each device
         for config in device_configs:
             conf = config["runningConfig"].strip()
@@ -59,11 +63,11 @@ def export_device_config(token: str):
             index = regex.index("hostname")
             hostname = regex[index + 1]
             # Create a config file
-            with open(os.path.join(DIR, f"{hostname}.txt"), "w") as config_file:
+            with open(os.path.join(DIR, f"{hostname}-{today}.txt"), "w") as config_file:
                 config_file.write(conf)
                 print(
                     colored(
-                        f"'{hostname}.txt' config file is created successfully!",
+                        f"'{hostname}-{today}.txt' config file is created successfully!",
                         "cyan",
                     )
                 )

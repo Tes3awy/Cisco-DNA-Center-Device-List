@@ -6,6 +6,7 @@ import time
 import matplotlib.pyplot as plt
 from colorama import init
 from termcolor import colored
+from datetime import datetime
 
 from credentials import BASE_URL, SSL_CERTIFICATE
 
@@ -65,7 +66,11 @@ def get_network_health(token: str):
         if not os.path.exists(NET_HEALTH_DIR):
             os.makedirs(NET_HEALTH_DIR)
 
-        NET_HEALTH_FIG = os.path.join(NET_HEALTH_DIR, f"{FIG_NAME}.jpg")
+        # Today's date
+        today = datetime.today().strftime("%Y-%m-%d")
+
+        # Image to save
+        NET_HEALTH_FIG = os.path.join(NET_HEALTH_DIR, f"{FIG_NAME}-{today}.jpg")
 
         # Figure
         fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True, sharey=False)
