@@ -98,3 +98,9 @@ SSL_CERTIFICATE = False # set to True if you have a valid certificate
 ### Preview
 
 ![Preview](/assets/preview.png)
+
+### Changelog
+
+**23 April, 2021**
+
+1. Add `get_network_health`.
