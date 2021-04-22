@@ -74,4 +74,5 @@ $RECYCLE.BIN/
 *.xlsx
 __pycache__
 configs
+net_health
 #credentials.py

@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
+import os
 import requests
 from requests.auth import HTTPBasicAuth
+from requests.packages import urllib3
 import json
-import urllib3
+from colorama import init
+from termcolor import colored
 
 from credentials import BASE_URL, USERNAME, PASSWORD, SSL_CERTIFICATE
 
@@ -11,8 +14,11 @@ from credentials import BASE_URL, USERNAME, PASSWORD, SSL_CERTIFICATE
 # (REMOVE if you are not sure of its purpose)
 urllib3.disable_warnings()
 
+# use Colorama to make Termcolor work on Windows too
+init(autoreset=True)
 
-def get_auth_token():
+# Get Auth Token
+def get_auth_token() -> str:
     headers = {
         "Content-Type": "application/json",
         "Accept": "application/json",
@@ -26,7 +32,8 @@ def get_auth_token():
             verify=SSL_CERTIFICATE,
         )
         response.raise_for_status()
-        print("Successful Token Generation.\n")
+        print(colored("get_auth_token:", "magenta"))
+        print(colored("Successful Token Generation.\n", "green"))
         return response.json()["Token"]
     except requests.exceptions.HTTPError as err:
-        raise SystemExit(err)
+        raise SystemExit(colored(err, "red"))

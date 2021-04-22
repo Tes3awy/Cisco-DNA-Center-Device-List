@@ -3,8 +3,11 @@
 import os
 import re
 import requests
-import urllib3
+from requests.packages import urllib3
 import json
+from colorama import init
+from termcolor import colored
+from datetime import datetime
 
 from credentials import BASE_URL, SSL_CERTIFICATE
 
@@ -12,8 +15,11 @@ from credentials import BASE_URL, SSL_CERTIFICATE
 # (REMOVE if you are not sure of its purpose)
 urllib3.disable_warnings()
 
+# use Colorama to make Termcolor work on Windows too
+init(autoreset=True)
+
 # Export device configs to text files
-def export_device_config(token):
+def export_device_config(token: str):
     headers = {
         "X-Auth-Token": token,
         "Content-Type": "application/json",
@@ -30,8 +36,12 @@ def export_device_config(token):
             verify=SSL_CERTIFICATE,
         )
         response.raise_for_status()
+        print(colored("export_device_config:", "magenta"))
         print(
-            "The request was successful. The result is contained in the response body.\n"
+            colored(
+                "The request was successful. The result is contained in the response body.\n",
+                "green",
+            )
         )
 
         device_configs = response.json()["response"]
@@ -42,6 +52,9 @@ def export_device_config(token):
         if not os.path.exists(DIR):
             os.makedirs(DIR)
 
+        # Today's date
+        today = datetime.today().strftime("%Y-%m-%d")
+
         # Export a config file for each device
         for config in device_configs:
             conf = config["runningConfig"].strip()
@@ -50,9 +63,15 @@ def export_device_config(token):
             index = regex.index("hostname")
             hostname = regex[index + 1]
             # Create a config file
-            with open(os.path.join(DIR, f"{hostname}.txt"), "w") as config_file:
-                config_file.write(config["runningConfig"])
-                print(f"'{hostname}.txt' config file was created successfully!")
+            with open(os.path.join(DIR, f"{hostname}-{today}.txt"), "w") as config_file:
+                config_file.write(conf)
+                print(
+                    colored(
+                        f"'{hostname}-{today}.txt' config file is created successfully!",
+                        "cyan",
+                    )
+                )
+        print("\n")
 
     except requests.exceptions.HTTPError as err:
-        raise SystemExit(err)
+        raise SystemExit(colored(err, "red"))
