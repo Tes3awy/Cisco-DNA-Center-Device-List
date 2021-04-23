@@ -8,8 +8,6 @@ from colorama import init
 from termcolor import colored
 from datetime import datetime
 
-from credentials import BASE_URL, SSL_CERTIFICATE
-
 # Disable SSL warnings. Not needed in production environments with valid certificates
 # (REMOVE if you are not sure of its purpose)
 urllib3.disable_warnings()
@@ -18,7 +16,7 @@ urllib3.disable_warnings()
 init(autoreset=True)
 
 # Get network health
-def get_network_health(token: str):
+def get_network_health(token: str, ENV: dict):
     headers = {
         "X-Auth-Token": token,
         "Content-Type": "application/json",
@@ -30,10 +28,10 @@ def get_network_health(token: str):
 
     try:
         response = requests.get(
-            f"{BASE_URL}{NETWORK_HEALTH_URL}",
+            f"{ENV['BASE_URL']}{NETWORK_HEALTH_URL}",
             headers=headers,
             data=None,
-            verify=SSL_CERTIFICATE,
+            verify=bool(ENV["SSL_CERTIFICATE"]),
         )
         response.raise_for_status()
         print(colored("get_network_health:", "magenta"))
@@ -60,7 +58,7 @@ def get_network_health(token: str):
 
         # Figures DIR
         NET_HEALTH_DIR = "net_health"
-        FIG_NAME = BASE_URL.replace("https://", "")
+        FIG_NAME = ENV["BASE_URL"].replace("https://", "")
 
         # Check if net_health exists
         if not os.path.exists(NET_HEALTH_DIR):
@@ -94,4 +92,4 @@ def get_network_health(token: str):
         )
 
     except requests.exceptions.HTTPError as err:
-        raise SystemExit(err)
+        raise SystemExit(colored(err, "red"))
