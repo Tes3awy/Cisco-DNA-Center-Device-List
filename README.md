@@ -1,8 +1,8 @@
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/Tes3awy/Cisco-DNA-Center-Device-List)
 
-# Cisco DNA Center Device List and Device Config
+# Cisco DNA Center Device List, Device Config, and Network Health
 
-This program is designed to export a Cisco DNA Center device list and save them to an Excel sheet and device configs and save them to text file.
+This program is designed to export a Cisco DNA Center device list: save them to an Excel sheet, device configs: save them to text file, and network health: export a bar chart.
 
 ## Table of Contents
 
@@ -30,6 +30,7 @@ $ pip install -r requirements.txt
 │   get_device_list.py
 │   export_device_list.py
 │   export_device_config.py
+│   get_network_health.py
 │   credentials.py
 │   requirements.txt
 │   README.md
@@ -42,7 +43,7 @@ $ pip install -r requirements.txt
 
 Once you clone the repo, please open `.gitignore` and uncomment `credentials.py`.
 
-> The `credentials.py` file should **NEVER** be committed nor pushed to any remote repos. _(The `credentials.py` in this repo is the `Cisco AO Lab 2.1.2.5` that is a free to lab.)_
+> The `credentials.py` file should **NEVER** be committed nor pushed to any remote repos. _(The `credentials.py` in this repo is the `Cisco AO Lab 2.1.2.5` that is a free to use lab.)_
 
 ### Usage
 
@@ -98,9 +99,3 @@ SSL_CERTIFICATE = False # set to True if you have a valid certificate
 ### Preview
 
 ![Preview](/assets/preview.png)
-
-### Changelog
-
-**23 April, 2021**
-
-1. Add `get_network_health`.
