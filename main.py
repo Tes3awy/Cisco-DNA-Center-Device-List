@@ -23,22 +23,30 @@ from export_device_list import export_device_list
 from export_device_config import export_device_config
 from get_network_health import get_network_health
 
+from dotenv import dotenv_values
+
+# ENV Variables in current project
+ENV = {
+    **dotenv_values(".env.example"),
+    **dotenv_values(".env"),
+}
+
 
 def main():
     # Obtain the Cisco DNA Center Auth Token
-    token = get_auth_token()
+    token = get_auth_token(ENV)
 
     # Obtain devices on Cisco DNA Center
-    devices = get_device_list(token)
+    devices = get_device_list(token, ENV)
 
     # Export devices to Excel sheet
-    export_device_list(devices)
+    export_device_list(devices, ENV)
 
     # Export device configs to .txt files
-    export_device_config(token)
+    export_device_config(token, ENV)
 
     # Obtain network health
-    get_network_health(token)
+    get_network_health(token, ENV)
 
 
 if __name__ == "__main__":

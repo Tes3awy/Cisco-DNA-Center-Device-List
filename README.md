@@ -31,7 +31,7 @@ $ pip install -r requirements.txt
 │   export_device_list.py
 │   export_device_config.py
 │   get_network_health.py
-│   credentials.py
+│   .env.example
 │   requirements.txt
 │   README.md
 │   .gitignore
@@ -41,13 +41,9 @@ $ pip install -r requirements.txt
         preview.png
 ```
 
-Once you clone the repo, please open `.gitignore` and uncomment `credentials.py`.
-
-> The `credentials.py` file should **NEVER** be committed nor pushed to any remote repos. _(The `credentials.py` in this repo is the `Cisco AO Lab 2.1.2.5` that is a free to use lab.)_
-
 ### Usage
 
-You need to provide your DNA Center credentials in `credentials.py` file.
+You need to provide your DNA Center credentials in a `.env` file. Create a `.env` file from `.env.example` and don't delete the latter. When there is a `.env` file in the current directory, it'll override the `.env.example`.
 
 Then run:
 
@@ -55,7 +51,7 @@ Then run:
 python main.py
 ```
 
-Voila :sparkles:! The Excel file is created automatically for the device list on Cisco DNA Center and configuration files of those devices are created in `configs/<device_hostname>.txt`.
+Voila :sparkles:! The Excel file is created automatically for the device list on Cisco DNA Center and configuration files of those devices are created in `configs/<device_id>.txt`.
 
 > The Excel file opens immediately upon creation.
 
@@ -81,13 +77,13 @@ This program is ready to be used for your deployed DNA Center.
 
 **Example:**
 
-`credentials.py`
+`.env`
 
-```python
-BASE_URL = "https://10.10.1.1" # without a trailing slash (/)
-USERNAME = "root"
-PASSWORD = "CiscoAdmin!2345"
-SSL_CERTIFICATE = False # set to True if you have a valid certificate
+```env
+BASE_URL=https://10.10.1.1 # without a trailing slash (/)
+USERNAME=root
+PASSWORD=CiscoAdmin!2345
+SSL_CERTIFICATE=False # set to True if you have a valid certificate
 ```
 
 ### References

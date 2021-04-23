@@ -8,21 +8,21 @@ import webbrowser as xlsxviewer
 from colorama import init
 from termcolor import colored
 
-from credentials import BASE_URL
-
 # use Colorama to make Termcolor work on Windows too
 init(autoreset=True)
 
 # Export device list to Excel sheet
-def export_device_list(devices: list):
+def export_device_list(devices: list, ENV: dict):
 
     # Vars
     today = datetime.date.today()
-    workbook_title = f"{BASE_URL.replace('https://', '')}-DNA-Center_{str(today)}.xlsx"
+    workbook_title = (
+        f"{ENV['BASE_URL'].replace('https://', '')}-DNA-Center_{str(today)}.xlsx"
+    )
 
     # Create Excel file
     workbook = xlsxwriter.Workbook(workbook_title, {"constant_memory": True})
-    worksheet = workbook.add_worksheet(BASE_URL.replace("https://", ""))
+    worksheet = workbook.add_worksheet(ENV["BASE_URL"].replace("https://", ""))
     worksheet_range = "$A:$J"
     worksheet.set_column(worksheet_range, 20)
 
@@ -67,10 +67,10 @@ def export_device_list(devices: list):
     # Set Excel file properties
     workbook.set_properties(
         {
-            "title": BASE_URL.replace("https://", ""),
+            "title": ENV["BASE_URL"].replace("https://", ""),
             "subject": "Cisco DNA Center",
             "author": "Osama Abbas",
-            "hyperlink_base": BASE_URL,
+            "hyperlink_base": ENV["BASE_URL"],
             "category": "Technology",
             "keywords": "Cisco, DNA Center, DevNet",
             "created": today,

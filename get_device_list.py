@@ -6,8 +6,6 @@ import json
 from colorama import init
 from termcolor import colored
 
-from credentials import BASE_URL, SSL_CERTIFICATE
-
 # Disable SSL warnings. Not needed in production environments with valid certificates
 # (REMOVE if you are not sure of its purpose)
 urllib3.disable_warnings()
@@ -16,7 +14,7 @@ urllib3.disable_warnings()
 init(autoreset=True)
 
 # Get device list
-def get_device_list(token: str):
+def get_device_list(token: str, ENV: dict):
     headers = {
         "X-Auth-Token": token,
         "Content-Type": "application/json",
@@ -27,10 +25,10 @@ def get_device_list(token: str):
 
     try:
         response = requests.get(
-            f"{BASE_URL}{DEVICE_LIST_URL}",
+            f"{ENV['BASE_URL']}{DEVICE_LIST_URL}",
             headers=headers,
             data=None,
-            verify=SSL_CERTIFICATE,
+            verify=bool(ENV["SSL_CERTIFICATE"]),
         )
         response.raise_for_status()
         print(colored("get_device_list:", "magenta"))

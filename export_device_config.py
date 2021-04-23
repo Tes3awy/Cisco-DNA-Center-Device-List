@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 
 import os
-import re
 import requests
 from requests.packages import urllib3
 import json
 from colorama import init
 from termcolor import colored
 from datetime import datetime
-
-from credentials import BASE_URL, SSL_CERTIFICATE
 
 # Disable SSL warnings. Not needed in production environments with valid certificates
 # (REMOVE if you are not sure of its purpose)
@@ -19,7 +16,7 @@ urllib3.disable_warnings()
 init(autoreset=True)
 
 # Export device configs to text files
-def export_device_config(token: str):
+def export_device_config(token: str, ENV: dict):
     headers = {
         "X-Auth-Token": token,
         "Content-Type": "application/json",
@@ -30,10 +27,10 @@ def export_device_config(token: str):
 
     try:
         response = requests.get(
-            f"{BASE_URL}{DEVICE_CONFIG_URL}",
+            f"{ENV['BASE_URL']}{DEVICE_CONFIG_URL}",
             headers=headers,
             data=None,
-            verify=SSL_CERTIFICATE,
+            verify=bool(ENV["SSL_CERTIFICATE"]),
         )
         response.raise_for_status()
         print(colored("export_device_config:", "magenta"))
@@ -54,20 +51,16 @@ def export_device_config(token: str):
 
         # Today's date
         today = datetime.today().strftime("%Y-%m-%d")
-
-        # Export a config file for each device
         for config in device_configs:
-            conf = config["runningConfig"].strip()
-            # Find the string after hostname by index
-            regex = re.findall(r"\w+", conf)
-            index = regex.index("hostname")
-            hostname = regex[index + 1]
+            cfg = config["runningConfig"].strip()
+            device_id = config["id"]
+            cfg_file_name = f"{device_id}_{today}.txt"
             # Create a config file
-            with open(os.path.join(DIR, f"{hostname}-{today}.txt"), "w") as config_file:
-                config_file.write(conf)
+            with open(os.path.join(DIR, cfg_file_name), "w") as config_file:
+                config_file.write(cfg)
                 print(
                     colored(
-                        f"'{hostname}-{today}.txt' config file is created successfully!",
+                        f"'{cfg_file_name}' config file is created successfully!",
                         "cyan",
                     )
                 )
