@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # -----------------------------------------------------------------------------------------
 #
@@ -37,10 +37,10 @@ def main():
     token = get_auth_token(ENV)
 
     # Obtain devices on Cisco DNA Center
-    devices = get_device_list(token, ENV)
+    device_list = get_device_list(token, ENV)
 
     # Export devices to Excel sheet
-    export_device_list(devices, ENV)
+    export_device_list(device_list, ENV)
 
     # Export device configs to .txt files
     export_device_config(token, ENV)

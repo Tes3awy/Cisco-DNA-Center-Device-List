@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import xlsxwriter
@@ -11,8 +11,17 @@ from termcolor import colored
 # use Colorama to make Termcolor work on Windows too
 init(autoreset=True)
 
-# Export device list to Excel sheet
-def export_device_list(devices: list, ENV: dict):
+
+def export_device_list(device_list: list, ENV: dict):
+    """Exports Device List to an Excel file
+
+    Args:
+        devices (list): Device List to export
+        ENV (dict): Environment Variables
+
+    Raises:
+        SystemExit: HTTP Errors
+    """
 
     # Vars
     today = datetime.date.today()
@@ -103,26 +112,6 @@ def export_device_list(devices: list, ENV: dict):
         }
     )
 
-    # Green Format
-    green_format = workbook.add_format(
-        {
-            "border": True,
-            "align": "center",
-            "valign": "vcenter",
-            "font_color": "#006100",
-            "bg_color": "#C6EFCE",
-        }
-    )
-    worksheet.conditional_format(
-        "K2:K1048576",
-        {
-            "type": "text",
-            "criteria": "containing",
-            "value": "Reachable",
-            "format": green_format,
-        },
-    )
-
     # Red Format
     red_format = workbook.add_format(
         {
@@ -143,6 +132,26 @@ def export_device_list(devices: list, ENV: dict):
         },
     )
 
+    # Green Format
+    green_format = workbook.add_format(
+        {
+            "border": True,
+            "align": "center",
+            "valign": "vcenter",
+            "font_color": "#006100",
+            "bg_color": "#C6EFCE",
+        }
+    )
+    worksheet.conditional_format(
+        "K2:K1048576",
+        {
+            "type": "text",
+            "criteria": "containing",
+            "value": "Reachable",
+            "format": green_format,
+        },
+    )
+
     # Highlight non blank rows (alternate) formula
     worksheet.conditional_format(
         "A2:J1048576",
@@ -158,7 +167,7 @@ def export_device_list(devices: list, ENV: dict):
     col = 0
 
     # Save each device in a seperate row
-    for device in devices:
+    for device in device_list:
         worksheet.write(row, col, device["hostname"], cell_format)
         worksheet.write(row, col + 1, device["id"], cell_format)
         worksheet.write(row, col + 2, device["managementIpAddress"], cell_format)

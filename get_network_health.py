@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import requests
 from requests.packages import urllib3
@@ -15,8 +17,18 @@ urllib3.disable_warnings()
 # use Colorama to make Termcolor work on Windows too
 init(autoreset=True)
 
-# Get network health
+
 def get_network_health(token: str, ENV: dict):
+    """Gets Network Health information
+
+    Args:
+        token (str): Cisco DNA Center Token
+        ENV (dict): Environment Variables
+
+    Raises:
+        SystemExit: HTTP Errors
+    """
+
     headers = {
         "X-Auth-Token": token,
         "Content-Type": "application/json",

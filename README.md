@@ -57,7 +57,7 @@ You need to provide your DNA Center credentials in a `.env` file. Create a `.env
 python main.py
 ```
 
-Voila :sparkles:! The Excel file is created automatically for the device list on Cisco DNA Center, configuration files of those devices are created in `configs/<device_id>_<today>.txt`, and a network health diagram is generated in `net_health/<BASE_URL>-<today>.jpg`.
+Voila :sparkles:! The Excel file is created automatically for the device list on Cisco DNA Center, configuration files of those devices are created in `configs/<config_id>_<today>.txt`, and a network health diagram is generated in `net_health/<BASE_URL>-<today>.jpg`.
 
 > The Excel file opens immediately upon creation.
 
