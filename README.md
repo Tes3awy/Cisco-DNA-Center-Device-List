@@ -1,4 +1,10 @@
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/Tes3awy/Cisco-DNA-Center-Device-List)
+[![Visual Studio Code](https://img.shields.io/badge/VSCode-1.55.2-blue.svg?logo=visual-studio-code)](https://code.visualstudio.com/)
+[![Tested on Python 3.9.4](https://img.shields.io/badge/Tested%20-Python%203.9.4-blue.svg?logo=python)](https://www.python.org/downloads)
+[![Code Size](https://img.shields.io/github/languages/code-size/Tes3awy/Cisco-DNA-Center-Device-List?color=green)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List)
+[![Contributions Welcome](https://img.shields.io/static/v1.svg?label=Contributions&message=Welcome&color=0059b3)]()
+[![License](https://img.shields.io/github/license/Tes3awy/Cisco-DNA-Center-Device-List)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 # Cisco DNA Center Device List, Device Config, and Network Health
 
@@ -45,13 +51,13 @@ $ pip install -r requirements.txt
 
 You need to provide your DNA Center credentials in a `.env` file. Create a `.env` file from `.env.example` and don't delete the latter. When there is a `.env` file in the current directory, it'll override the `.env.example`.
 
-Then run:
+**Then run:**
 
 ```python3
 python main.py
 ```
 
-Voila :sparkles:! The Excel file is created automatically for the device list on Cisco DNA Center and configuration files of those devices are created in `configs/<device_id>.txt`.
+Voila :sparkles:! The Excel file is created automatically for the device list on Cisco DNA Center, configuration files of those devices are created in `configs/<device_id>.txt`, and a network health diagram is generated in `net_health/<BASE_URL>.jpg`.
 
 > The Excel file opens immediately upon creation.
 
@@ -75,6 +81,14 @@ Voila :sparkles:! The Excel file is created automatically for the device list on
 
 This program is ready to be used for your deployed DNA Center.
 
+**Create a `.env` file:**
+
+```bash
+$ cp .env.example .env
+```
+
+Repalce the `.env` file values with your Cisco DNA Center credentials.
+
 **Example:**
 
 `.env`
@@ -95,3 +109,5 @@ SSL_CERTIFICATE=False # set to True if you have a valid certificate
 ### Preview
 
 ![Preview](/assets/preview.png)
+
+![Network Health](/assets/sandboxdnac2.cisco.com.jpg)
