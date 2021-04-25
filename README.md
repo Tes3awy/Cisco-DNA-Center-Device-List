@@ -8,7 +8,7 @@
 
 # Cisco DNA Center Device List, Device Config, and Network Health
 
-This program is designed to export a Cisco DNA Center device list: save them to an Excel sheet, device configs: save them to text file, and network health: export a bar chart.
+This program is designed to export a Cisco DNA Center **device list:** save them to an Excel sheet, **device configs:** save them to text file, and **network health:** export a bar chart.
 
 ## Table of Contents
 
@@ -57,7 +57,7 @@ You need to provide your DNA Center credentials in a `.env` file. Create a `.env
 python main.py
 ```
 
-Voila :sparkles:! The Excel file is created automatically for the device list on Cisco DNA Center, configuration files of those devices are created in `configs/<device_id>.txt`, and a network health diagram is generated in `net_health/<BASE_URL>.jpg`.
+Voila :sparkles:! The Excel file is created automatically for the device list on Cisco DNA Center, configuration files of those devices are created in `configs/<device_id>_<today>.txt`, and a network health diagram is generated in `net_health/<BASE_URL>-<today>.jpg`.
 
 > The Excel file opens immediately upon creation.
 
@@ -108,6 +108,6 @@ SSL_CERTIFICATE=False # set to True if you have a valid certificate
 
 ### Preview
 
-![Preview](/assets/preview.png)
+![Preview](assets/preview.png)
 
-![Network Health](/assets/sandboxdnac2.cisco.com.jpg)
+![Network Health](assets/sandboxdnac2.cisco.com.jpg)
