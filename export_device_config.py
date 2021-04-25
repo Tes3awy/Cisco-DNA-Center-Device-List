@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import requests
@@ -53,8 +53,8 @@ def export_device_config(token: str, ENV: dict):
         today = datetime.today().strftime("%Y-%m-%d")
         for config in device_configs:
             cfg = config["runningConfig"].strip()
-            device_id = config["id"]
-            cfg_file_name = f"{device_id}_{today}.txt"
+            config_id = config["id"]
+            cfg_file_name = f"{config_id}_{today}.txt"
             # Create a config file
             with open(os.path.join(DIR, cfg_file_name), "w") as config_file:
                 config_file.write(cfg)

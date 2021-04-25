@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import requests
 from requests.packages import urllib3
@@ -13,8 +13,21 @@ urllib3.disable_warnings()
 # use Colorama to make Termcolor work on Windows too
 init(autoreset=True)
 
-# Get device list
-def get_device_list(token: str, ENV: dict):
+
+def get_device_list(token: str, ENV: dict) -> list:
+    """Gets device list of a Cisco DNA Center
+
+    Args:
+        token (str): Cisco DNA Center Token
+        ENV (dict): Environment Variables
+
+    Raises:
+        SystemExit: HTTP Errors
+
+    Returns:
+        list: Device list
+    """
+
     headers = {
         "X-Auth-Token": token,
         "Content-Type": "application/json",

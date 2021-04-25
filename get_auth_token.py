@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -14,8 +14,19 @@ urllib3.disable_warnings()
 # use Colorama to make Termcolor work on Windows too
 init(autoreset=True)
 
-# Get Auth Token
+
 def get_auth_token(ENV: dict) -> str:
+    """Gets Cisco DNA Center Auth Token
+
+    Args:
+        ENV (dict): Environment Variables
+
+    Raises:
+        SystemExit: HTTP Errors
+
+    Returns:
+        str: Generated Token
+    """
 
     headers = {
         "Content-Type": "application/json",
