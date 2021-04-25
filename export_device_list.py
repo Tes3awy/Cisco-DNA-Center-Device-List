@@ -23,7 +23,8 @@ def export_device_list(devices: list, ENV: dict):
     # Create Excel file
     workbook = xlsxwriter.Workbook(workbook_title, {"constant_memory": True})
     worksheet = workbook.add_worksheet(ENV["BASE_URL"].replace("https://", ""))
-    worksheet_range = "$A:$J"
+    worksheet_range = "$A:$K"
+    worksheet.autofilter("A1:K1")
     worksheet.set_column(worksheet_range, 20)
 
     # Header cells format
@@ -40,16 +41,16 @@ def export_device_list(devices: list, ENV: dict):
 
     # Set Columns Width
     worksheet.set_column("A:A", 15)
-    worksheet.set_column("B:B", 35)
-    worksheet.set_column("C:C", 15)
-    worksheet.set_column("D:D", 13)
-    worksheet.set_column("E:E", 19)
-    worksheet.set_column("F:F", 16)
-    worksheet.set_column("G:G", 10)
-    worksheet.set_column("H:H", 10)
-    worksheet.set_column("I:I", 17)
-    worksheet.set_column("J:J", 17)
-    worksheet.set_column("K:K", 11)
+    worksheet.set_column("B:B", 35.56)
+    worksheet.set_column("C:C", 19.78)
+    worksheet.set_column("D:D", 16.56)
+    worksheet.set_column("E:E", 20)
+    worksheet.set_column("F:F", 15.67)
+    worksheet.set_column("G:G", 14.33)
+    worksheet.set_column("H:H", 12)
+    worksheet.set_column("I:I", 18.22)
+    worksheet.set_column("J:J", 17.33)
+    worksheet.set_column("K:K", 14.89)
 
     # Header cells
     worksheet.write_string("A1", "Hostname", header_cell_format)
