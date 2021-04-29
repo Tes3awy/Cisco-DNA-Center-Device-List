@@ -7,10 +7,11 @@ import json
 from colorama import init
 from termcolor import colored
 from datetime import datetime
+from distutils.util import strtobool
 
 # Disable SSL warnings. Not needed in production environments with valid certificates
 # (REMOVE if you are not sure of its purpose)
-urllib3.disable_warnings()
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # use Colorama to make Termcolor work on Windows too
 init(autoreset=True)
@@ -30,7 +31,7 @@ def export_device_config(token: str, ENV: dict):
             f"{ENV['BASE_URL']}{DEVICE_CONFIG_URL}",
             headers=headers,
             data=None,
-            verify=bool(ENV["SSL_CERTIFICATE"]),
+            verify=True if strtobool(ENV["SSL_CERTIFICATE"]) else False,
         )
         response.raise_for_status()
         print(colored("export_device_config:", "magenta"))
