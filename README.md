@@ -18,7 +18,7 @@ This program is designed to export a Cisco DNA Center **device list:** save them
 4. [Collected Data from Response](#collected-data)
 5. [Use it for your DNA Center](#use-it-for-your-dna-center)
 6. [References](#references)
-7. [Preview](#preview)
+7. [Previews](#previews)
 
 ### Installation
 
@@ -43,23 +43,29 @@ $ pip install -r requirements.txt
 │   .gitignore
 │   LICENSE
 │
+├───.github
+│   └───ISSUE_TEMPLATE
+│           bug_report.md
+│           feature_request.md
+│
 └───assets
         preview.png
+        sandboxdnac2.cisco.com.jpg
 ```
 
 ### Usage
 
-You need to provide your DNA Center credentials in a `.env` file. Create a `.env` file from `.env.example` and don't delete the latter. When there is a `.env` file in the current directory, it'll override the `.env.example`.
+You need to provide your DNA Center credentials in a `.env` file. Create a `.env` file from `.env.example` and don't delete the latter. A `.env` file in the current directory, will override the `.env.example`.
 
 **Then run:**
 
-```python3
+```python
 python main.py
 ```
 
-Voila :sparkles:! The Excel file is created automatically for the device list on Cisco DNA Center, configuration files of those devices are created in `configs/<config_id>_<today>.txt`, and a network health diagram is generated in `net_health/<BASE_URL>-<today>.jpg`.
+Voila :sparkles:! An Excel file is created automatically for the device list on Cisco DNA Center, configuration files of those devices are created in `configs/<config_id>_<today>.txt`, and a network health diagram (bar chart) is created in `net_health/<BASE_URL>-<today>.jpg`.
 
-> The Excel file opens immediately upon creation.
+> You will be prompted either to open the generated Excel file or skip and continue running the program.
 
 > `XlsxWriter` does not give you the option to append new data to a created file. So every time you send a request, the Excel file will be overwritten. You should close the Excel program before sending any new requests.
 
@@ -106,8 +112,8 @@ SSL_CERTIFICATE=False # set to True if you have a valid certificate
 
 [DNA Center Platform](https://developer.cisco.com/docs/dna-center/#!authentication-api)
 
-### Preview
+### Previews
 
-![Preview](assets/preview.png)
+![Excel File](assets/preview.png)
 
 ![Network Health](assets/sandboxdnac2.cisco.com.jpg)
