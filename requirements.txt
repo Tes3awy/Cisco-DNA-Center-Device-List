@@ -3,4 +3,4 @@ XlsxWriter==1.4.0
 matplotlib==3.4.1
 colorama==0.4.4
 termcolor==1.1.0
-python-dotenv==0.17.0
+python-dotenv==0.17.1
