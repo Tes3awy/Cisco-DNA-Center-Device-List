@@ -18,6 +18,7 @@
 .DS_Store
 .AppleDouble
 .LSOverride
+__MACOSX
 
 # Icon must end with two \r
 Icon
@@ -70,9 +71,12 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# PWD files
+# CWD files
 *.xlsx
 __pycache__
 configs
 net_health
 .env
+.coveragerc
+.coverage
+htmlcov
