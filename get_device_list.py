@@ -4,7 +4,7 @@ import requests
 from requests.packages import urllib3
 import json
 from colorama import init
-from termcolor import colored
+from termcolor import cprint
 from distutils.util import strtobool
 
 # Disable SSL warnings. Not needed in production environments with valid certificates
@@ -45,13 +45,11 @@ def get_device_list(token: str, ENV: dict) -> list:
             verify=True if strtobool(ENV["SSL_CERTIFICATE"]) else False,
         )
         response.raise_for_status()
-        print(colored("get_device_list:", "magenta"))
-        print(
-            colored(
-                "The request was successful. The result is contained in the response body.\n",
-                "green",
-            )
+        cprint("get_device_list:", "magenta")
+        cprint(
+            "The request was successful. The result is contained in the response body.\n",
+            "green",
         )
         return response.json()["response"]
     except requests.exceptions.HTTPError as err:
-        raise SystemExit(colored(err, "red"))
+        raise SystemExit(cprint(err, "red"))

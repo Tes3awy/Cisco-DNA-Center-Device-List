@@ -7,7 +7,7 @@ import json
 import time
 import matplotlib.pyplot as plt
 from colorama import init
-from termcolor import colored
+from termcolor import cprint
 from datetime import datetime
 from distutils.util import strtobool
 
@@ -47,12 +47,10 @@ def get_network_health(token: str, ENV: dict):
             verify=True if strtobool(ENV["SSL_CERTIFICATE"]) else False,
         )
         response.raise_for_status()
-        print(colored("get_network_health:", "magenta"))
-        print(
-            colored(
-                "The request was successful. The result is contained in the response body.\n",
-                "green",
-            )
+        cprint("get_network_health:", "magenta")
+        cprint(
+            "The request was successful. The result is contained in the response body.\n",
+            "green",
         )
 
         health_distribution = response.json()["healthDistirubution"]
@@ -97,12 +95,7 @@ def get_network_health(token: str, ENV: dict):
         ax2.grid(True)
         # Save plot to net_health/*.jpg
         plt.savefig(NET_HEALTH_FIG, dpi=300)
-        print(
-            colored(
-                f"Please check '{NET_HEALTH_FIG}'",
-                "cyan",
-            )
-        )
+        cprint(f"Please check '{NET_HEALTH_FIG}'", "cyan")
 
     except requests.exceptions.HTTPError as err:
-        raise SystemExit(colored(err, "red"))
+        raise SystemExit(cprint(err, "red"))

@@ -5,7 +5,7 @@ import requests
 from requests.packages import urllib3
 import json
 from colorama import init
-from termcolor import colored
+from termcolor import cprint
 from datetime import datetime
 from distutils.util import strtobool
 
@@ -34,12 +34,10 @@ def export_device_config(token: str, ENV: dict):
             verify=True if strtobool(ENV["SSL_CERTIFICATE"]) else False,
         )
         response.raise_for_status()
-        print(colored("export_device_config:", "magenta"))
-        print(
-            colored(
-                "The request was successful. The result is contained in the response body.\n",
-                "green",
-            )
+        cprint("export_device_config:", "magenta")
+        cprint(
+            "The request was successful. The result is contained in the response body.\n",
+            "green",
         )
 
         device_configs = response.json()["response"]
@@ -59,13 +57,12 @@ def export_device_config(token: str, ENV: dict):
             # Create a config file
             with open(os.path.join(DIR, cfg_file_name), "w") as config_file:
                 config_file.write(cfg)
-                print(
-                    colored(
-                        f"'{cfg_file_name}' config file is created successfully!",
-                        "cyan",
-                    )
+                cprint(
+                    f"'{cfg_file_name}' config file is created successfully!",
+                    "cyan",
                 )
+
         print("\n")
 
     except requests.exceptions.HTTPError as err:
-        raise SystemExit(colored(err, "red"))
+        raise SystemExit(cprint(err, "red"))

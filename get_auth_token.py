@@ -5,7 +5,7 @@ from requests.auth import HTTPBasicAuth
 from requests.packages import urllib3
 import json
 from colorama import init
-from termcolor import colored
+from termcolor import cprint
 from distutils.util import strtobool
 
 # Disable SSL warnings. Not needed in production environments with valid certificates
@@ -43,8 +43,8 @@ def get_auth_token(ENV: dict) -> str:
         )
 
         response.raise_for_status()
-        print(colored("get_auth_token:", "magenta"))
-        print(colored("Successful Token Generation.\n", "green"))
+        cprint("get_auth_token:", "magenta")
+        cprint("Successful Token Generation.\n", "green")
         return response.json()["Token"]
     except requests.exceptions.HTTPError as err:
-        raise SystemExit(colored(err, "red"))
+        raise SystemExit(cprint(err, "red"))
