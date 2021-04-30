@@ -7,7 +7,7 @@ import datetime
 import time
 import webbrowser as xlsxviewer
 from colorama import init
-from termcolor import cprint, colored
+from termcolor import cprint
 
 # use Colorama to make Termcolor work on Windows too
 init(autoreset=True)
