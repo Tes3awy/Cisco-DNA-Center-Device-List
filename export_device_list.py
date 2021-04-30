@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 import xlsxwriter
 import datetime
 import time
@@ -188,9 +189,20 @@ def export_device_list(device_list: list, ENV: dict):
             workbook.close()
             cprint("export_device_list:", "magenta")
             cprint(f"'{workbook_title}' Excel file is created successfully!", "cyan")
-            cprint(f"Opening '{workbook_title}', please wait ...\n", "cyan")
-            time.sleep(1)
-            xlsxviewer.open(os.path.abspath(workbook_title))
+            try:
+                decision = (
+                    input(f"Do you want to open '{workbook_title}'? [y/N]: ") or "N"
+                )
+                if decision in ("Y", "y"):
+                    cprint(f"Opening '{workbook_title}', please wait ...\n", "cyan")
+                    time.sleep(1)
+                    xlsxviewer.open(os.path.abspath(workbook_title))
+                elif decision in ("N", "n"):
+                    cprint(f"INFO: '{workbook_title}' will not open in Excel", "blue")
+                else:
+                    cprint("Invalid input value!", "red")
+            except KeyboardInterrupt as err:
+                cprint("\nProcess interupted by the user", "yellow", file=sys.stderr)
         except xlsxwriter.exceptions.FileCreateError as err:
             raise SystemExit(
                 cprint(
