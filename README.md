@@ -8,7 +8,7 @@
 
 # Cisco DNA Center Device List, Device Config, and Network Health
 
-This program is designed to export a Cisco DNA Center **device list:** save them to an Excel sheet, **device configs:** save them to text file, and **network health:** export a bar chart.
+This program is designed to export a Cisco DNAC device list and save them to an Excel sheet, device configurations and save them to text file, and network health and generate a bar chart.
 
 ## Table of Contents
 
@@ -55,7 +55,7 @@ $ pip install -r requirements.txt
 
 ### Usage
 
-You need to provide your DNA Center credentials in a `.env` file. Create a `.env` file from `.env.example` and don't delete the latter. A `.env` file in the current directory, will override the `.env.example`.
+You need to provide your DNA Center credentials in a `.env` file. Create a `.env` file from `.env.example` and DON'T delete the latter. A `.env` file in the current working directory will override the `.env.example` one.
 
 **Then run:**
 
@@ -63,11 +63,11 @@ You need to provide your DNA Center credentials in a `.env` file. Create a `.env
 python main.py
 ```
 
-Voila :sparkles:! An Excel file is created automatically for the device list on Cisco DNA Center, configuration files of those devices are created in `configs/<config_id>_<today>.txt`, and a network health diagram (bar chart) is created in `net_health/<BASE_URL>-<today>.jpg`.
+Voila :sparkles:! An Excel file is created automatically from the device list on Cisco DNAC, configuration files of those devices are created in `configs/<config_id>_<today>.txt`, and a network health diagram __(a bar chart with legend)__ is created in `net_health/<BASE_URL>-<today>.jpg`.
 
-> You will be prompted either to open the generated Excel file or skip and continue running the program.
+> You will be prompted either to open the generated Excel file or just skip and continue running the program.
 
-> `XlsxWriter` does not give you the option to append new data to a created file. So every time you send a request, the Excel file will be overwritten. You should close the Excel program before sending any new requests.
+> `XlsxWriter` does not give you the option to append new data to a created opened file (As with text files). So every time you send a request, the Excel file will be overwritten. **NOTE:** You should close the Excel program before sending any new requests.
 
 ### Collected Data from Response
 
@@ -100,20 +100,22 @@ Repalce the `.env` file values with your Cisco DNA Center credentials.
 `.env`
 
 ```env
-BASE_URL=https://10.10.1.1 # without a trailing slash (/)
+DOMAIN=10.10.1.1 # without a trailing slash (/)
+BASE_URL=https://${DOMAIN}
 USERNAME=root
 PASSWORD=CiscoAdmin!2345
-SSL_CERTIFICATE=False # set to True if you have a valid certificate
+SSL_CERTIFICATE=False # set to True if you have a SSL valid certificate
 ```
 
 ### References
 
 **APIs List**
 
-[DNA Center Platform](https://developer.cisco.com/docs/dna-center/#!authentication-api)
+1. [DNA Center Platform](https://developer.cisco.com/docs/dna-center/#!authentication-api)
+2. [Cisco DNA Assurance User Guide](https://www.cisco.com/c/en/us/td/docs/cloud-systems-management/network-automation-and-management/dna-center-assurance/1-3/b_cisco_dna_assurance_1_3_ug/b_cisco_dna_assurance_1_3_ug_chapter_0101.html#task_rn2_zdr_yy__p_assurance_score)
 
 ### Previews
 
-![Excel File](assets/preview.png)
+![Excel Preview](assets/preview.png)
 
-![Network Health](assets/sandboxdnac2.cisco.com.jpg)
+![Network Health Bar Chart](assets/sandboxdnac2.cisco.com.jpg)**_A demonstration for color formatting_**
