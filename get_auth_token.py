@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
+from distutils.util import strtobool
+
 import requests
+from colorama import init
 from requests.auth import HTTPBasicAuth
 from requests.packages import urllib3
-import json
-from colorama import init
 from termcolor import cprint
-from distutils.util import strtobool
 
 # Disable SSL warnings. Not needed in production environments with valid certificates
 # (REMOVE if you are not sure of its purpose)
@@ -48,3 +48,5 @@ def get_auth_token(ENV: dict) -> str:
         return response.json()["Token"]
     except requests.exceptions.HTTPError as err:
         raise SystemExit(cprint(err, "red"))
+    except KeyboardInterrupt:
+        raise SystemExit(cprint("Process interrupted by the user", "yellow"))

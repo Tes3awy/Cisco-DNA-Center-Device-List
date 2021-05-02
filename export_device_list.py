@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-import os
-import sys
-import xlsxwriter
 import datetime
+import os
 import time
 import webbrowser as xlsxviewer
+
+import xlsxwriter
 from colorama import init
 from termcolor import cprint
 
@@ -26,13 +26,11 @@ def export_device_list(device_list: list, ENV: dict):
 
     # Vars
     today = datetime.date.today()
-    workbook_title = (
-        f"{ENV['BASE_URL'].replace('https://', '')}-DNA-Center_{str(today)}.xlsx"
-    )
+    workbook_title = f"{ENV['DOMAIN']}-DNA-Center_{str(today)}.xlsx"
 
     # Create Excel file
     workbook = xlsxwriter.Workbook(workbook_title, {"constant_memory": True})
-    worksheet = workbook.add_worksheet(ENV["BASE_URL"].replace("https://", ""))
+    worksheet = workbook.add_worksheet(ENV["DOMAIN"])
     worksheet_range = "$A:$K"
     worksheet.autofilter("A1:K1")
     worksheet.set_column(worksheet_range, 20)
@@ -78,12 +76,12 @@ def export_device_list(device_list: list, ENV: dict):
     # Set Excel file properties
     workbook.set_properties(
         {
-            "title": ENV["BASE_URL"].replace("https://", ""),
+            "title": ENV["DOMAIN"],
             "subject": "Cisco DNA Center",
             "author": "Osama Abbas",
             "hyperlink_base": ENV["BASE_URL"],
             "category": "Technology",
-            "keywords": "Cisco, DNA Center, DevNet",
+            "keywords": "Cisco, DNAC, DevNet, Python, API",
             "created": today,
             "comments": "Created with Python and XlsxWriter",
             "status": "Completed",
@@ -191,18 +189,21 @@ def export_device_list(device_list: list, ENV: dict):
             cprint(f"'{workbook_title}' Excel file is created successfully!", "cyan")
             try:
                 decision = (
-                    input(f"Do you want to open '{workbook_title}'? [y/N]: ") or "N"
+                    input(f"Do you want to open '{workbook_title}' now? [y/N]: ") or "N"
                 )
                 if decision in ("Y", "y"):
                     cprint(f"Opening '{workbook_title}', please wait ...\n", "cyan")
                     time.sleep(1)
                     xlsxviewer.open(os.path.abspath(workbook_title))
                 elif decision in ("N", "n"):
-                    cprint(f"INFO: '{workbook_title}' will not open in Excel", "blue")
+                    cprint(
+                        f"INFO: '{workbook_title}' is saved in your current directory\n",
+                        "blue",
+                    )
                 else:
-                    cprint("Invalid input value!", "red")
+                    raise SystemExit(cprint("Invalid input value!\n", "red"))
             except KeyboardInterrupt as err:
-                cprint("\nProcess interupted by the user", "yellow", file=sys.stderr)
+                raise SystemExit(cprint("\nProcess interupted by the user", "yellow"))
         except xlsxwriter.exceptions.FileCreateError as err:
             raise SystemExit(
                 cprint(

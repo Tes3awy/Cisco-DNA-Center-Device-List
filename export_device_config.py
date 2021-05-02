@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
 import os
-import requests
-from requests.packages import urllib3
-import json
-from colorama import init
-from termcolor import cprint
 from datetime import datetime
 from distutils.util import strtobool
+
+import requests
+from colorama import init
+from requests.packages import urllib3
+from termcolor import cprint
 
 # Disable SSL warnings. Not needed in production environments with valid certificates
 # (REMOVE if you are not sure of its purpose)
@@ -61,8 +61,6 @@ def export_device_config(token: str, ENV: dict):
                     f"'{cfg_file_name}' config file is created successfully!",
                     "cyan",
                 )
-
-        print("\n")
 
     except requests.exceptions.HTTPError as err:
         raise SystemExit(cprint(err, "red"))
