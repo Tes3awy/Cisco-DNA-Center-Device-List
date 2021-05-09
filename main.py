@@ -17,13 +17,15 @@
 # -----------------------------------------------------------------------------------------
 
 # Import Modules
-from get_auth_token import get_auth_token
-from get_device_list import get_device_list
-from export_device_list import export_device_list
-from export_device_config import export_device_config
-from get_network_health import get_network_health
+import time
 
 from dotenv import dotenv_values
+
+from export_device_config import export_device_config
+from export_device_list import export_device_list
+from get_auth_token import get_auth_token
+from get_device_list import get_device_list
+from get_network_health import get_network_health
 
 # ENV Variables in current project
 ENV = {
@@ -33,6 +35,9 @@ ENV = {
 
 
 def main():
+    # Start time
+    start_time = time.process_time()
+
     # Obtain the Cisco DNA Center Auth Token
     token = get_auth_token(ENV)
 
@@ -47,6 +52,9 @@ def main():
 
     # Obtain network health
     get_network_health(token, ENV)
+
+    # Print Elasped time
+    print(f"\nElapsed time: {time.process_time() - start_time}")
 
 
 if __name__ == "__main__":
