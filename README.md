@@ -40,6 +40,8 @@ $ pip install -r requirements.txt
 │   .env.example
 │   requirements.txt
 │   README.md
+│   CONTRIBUTING.md
+│   CODE_OF_CONDUCT.md
 │   .gitignore
 │   LICENSE
 │
@@ -51,6 +53,7 @@ $ pip install -r requirements.txt
 └───assets
         preview.png
         sandboxdnac2.cisco.com.jpg
+        script-logs.png
 ```
 
 ### Usage
