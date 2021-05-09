@@ -1,5 +1,5 @@
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/Tes3awy/Cisco-DNA-Center-Device-List)
-[![Visual Studio Code](https://img.shields.io/badge/VSCode-1.55.2-blue.svg?logo=visual-studio-code)](https://code.visualstudio.com/)
+[![Visual Studio Code](https://img.shields.io/badge/VSCode-1.56.0-blue.svg?logo=visual-studio-code)](https://code.visualstudio.com/)
 [![Tested on Python 3.9.4](https://img.shields.io/badge/Tested%20-Python%203.9.4-blue.svg?logo=python)](https://www.python.org/downloads)
 [![Code Size](https://img.shields.io/github/languages/code-size/Tes3awy/Cisco-DNA-Center-Device-List?color=green)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List)
 [![Contributions Welcome](https://img.shields.io/static/v1.svg?label=Contributions&message=Welcome&color=0059b3)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List/blob/main/CONTRIBUTING.md)
@@ -55,7 +55,7 @@ $ pip install -r requirements.txt
 
 ### Usage
 
-You need to provide your DNA Center credentials in a `.env` file. Create a `.env` file from `.env.example` and DON'T delete the latter. A `.env` file in the current working directory will override the `.env.example` one.
+You need to provide your DNA Center credentials in a `.env` file. Create a `.env` file from `.env.example` and **DON'T** delete the latter (Check **Use it for your DNA Center** section). A `.env` file in the current working directory will override the `.env.example`.
 
 **Then run:**
 
@@ -63,7 +63,7 @@ You need to provide your DNA Center credentials in a `.env` file. Create a `.env
 python main.py
 ```
 
-Voila :sparkles:! An Excel file is created automatically from the device list on Cisco DNAC, configuration files of those devices are created in `configs/<config_id>_<today>.txt`, and a network health diagram __(a bar chart with legend)__ is created in `net_health/<BASE_URL>-<today>.jpg`.
+Voila :sparkles:! An Excel file is created automatically from the device list on Cisco DNAC, configuration files of those devices are created in `configs/<config_id>_<today>.txt`, and a network health diagram **(a bar chart with legend)** is created in `net_health/<BASE_URL>-<today>.jpg`.
 
 > You will be prompted either to open the generated Excel file or just skip and continue running the program.
 
@@ -99,7 +99,7 @@ Repalce the `.env` file values with your Cisco DNA Center credentials.
 
 `.env`
 
-```env
+```vim
 DOMAIN=10.10.1.1 # without a trailing slash (/)
 BASE_URL=https://${DOMAIN}
 USERNAME=root
@@ -111,11 +111,19 @@ SSL_CERTIFICATE=False # set to True if you have a SSL valid certificate
 
 **APIs List**
 
-1. [DNA Center Platform](https://developer.cisco.com/docs/dna-center/#!authentication-api)
-2. [Cisco DNA Assurance User Guide](https://www.cisco.com/c/en/us/td/docs/cloud-systems-management/network-automation-and-management/dna-center-assurance/1-3/b_cisco_dna_assurance_1_3_ug/b_cisco_dna_assurance_1_3_ug_chapter_0101.html#task_rn2_zdr_yy__p_assurance_score)
+[DNA Center Platform](https://developer.cisco.com/docs/dna-center/#!authentication-api)
+
+**Documentation**
+
+[Cisco DNA Assurance User Guide](https://www.cisco.com/c/en/us/td/docs/cloud-systems-management/network-automation-and-management/dna-center-assurance/1-3/b_cisco_dna_assurance_1_3_ug/b_cisco_dna_assurance_1_3_ug_chapter_0101.html#task_rn2_zdr_yy__p_assurance_score)
 
 ### Previews
 
-![Excel Preview](assets/preview.png)
+**_Logs_**
+![Script Logs](assets/script-logs.png)
 
-![Network Health Bar Chart](assets/sandboxdnac2.cisco.com.jpg)**_A demonstration for color formatting_**
+**_Excel File Preview_**
+![Excel File Preview](assets/preview.png)
+
+**_A demonstration for color formatting_**
+![Network Health Bar Chart](assets/sandboxdnac2.cisco.com.jpg)
