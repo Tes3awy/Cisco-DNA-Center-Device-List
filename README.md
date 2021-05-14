@@ -58,7 +58,9 @@ $ pip install -r requirements.txt
 
 ### Usage
 
-You need to provide your DNA Center credentials in a `.env` file. Create a `.env` file from `.env.example` and **DON'T** delete the latter (Check **Use it for your DNA Center** section). A `.env` file in the current working directory will override the `.env.example`.
+You need to provide your DNA Center credentials in a `.env` file. Create a `.env` file from `.env.example` and **DON'T** delete the latter (Check **Use it for your DNA Center** section).
+
+> **A `.env` file in the current working directory will override the `.env.example`.**
 
 **Then run:**
 
@@ -66,11 +68,13 @@ You need to provide your DNA Center credentials in a `.env` file. Create a `.env
 python main.py
 ```
 
-Voila :sparkles:! An Excel file is created automatically from the device list on Cisco DNAC, configuration files of those devices are created in `configs/<config_id>_<today>.txt`, and a network health diagram **(a bar chart with legend)** is created in `net_health/<BASE_URL>-<today>.jpg`.
+Voila :sparkles:! An Excel file is created automatically from the device list on Cisco DNAC in the current working directory, configuration files of those devices are created in `configs/<DOMAIN>/<today>/<config_id>_<today>.txt`, and a network health diagram **(a bar chart with legend)** is created in `net_health/<BASE_URL>-<today>.jpg`.
 
 > You will be prompted either to open the generated Excel file or just skip and continue running the program.
 
-> `XlsxWriter` does not give you the option to append new data to a created opened file (As with text files). So every time you send a request, the Excel file will be overwritten. **NOTE:** You should close the Excel program before sending any new requests.
+> `XlsxWriter` does not give you the option to append new data to a created opened file (As with text files). So every time you send a request, the Excel file will be overwritten.
+
+> **NOTE:** You should close the Excel program before sending any new requests.
 
 ### Collected Data from Response
 
@@ -90,7 +94,7 @@ Voila :sparkles:! An Excel file is created automatically from the device list on
 
 This program is ready to be used for your deployed DNA Center.
 
-**Create a `.env` file:**
+**Create a `.env` file from `.env.example`:**
 
 ```bash
 $ cp .env.example .env
