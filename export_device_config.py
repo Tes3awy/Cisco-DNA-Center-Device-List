@@ -18,6 +18,19 @@ init(autoreset=True)
 
 # Export device configs to text files
 def export_device_config(token: str, ENV: dict):
+    """Exports device configurations into text files
+
+    Args:
+        token (str): Authentication token
+        ENV (dict): Environment variables
+
+    Raises:
+        SystemExit: HTTP Errors
+    """
+
+    # Today's date
+    today = datetime.today().strftime("%Y-%m-%d")
+
     headers = {
         "X-Auth-Token": token,
         "Content-Type": "application/json",
@@ -45,17 +58,17 @@ def export_device_config(token: str, ENV: dict):
         DIR = "configs"
 
         # Create configs directory if not created
-        if not os.path.exists(DIR):
-            os.makedirs(DIR)
+        os.makedirs(DIR, exist_ok=True)
 
-        # Today's date
-        today = datetime.today().strftime("%Y-%m-%d")
+        CONFIGS_DIR = f'{DIR}/{ENV["DOMAIN"]}/{today}'
+        os.makedirs(f"{CONFIGS_DIR}", exist_ok=True)
+
         for config in device_configs:
             cfg = config["runningConfig"].strip()
             config_id = config["id"]
             cfg_file_name = f"{config_id}_{today}.txt"
             # Create a config file
-            with open(os.path.join(DIR, cfg_file_name), "w") as config_file:
+            with open(os.path.join(CONFIGS_DIR, cfg_file_name), "w") as config_file:
                 config_file.write(cfg)
                 cprint(
                     f"'{cfg_file_name}' config file is created successfully!",
