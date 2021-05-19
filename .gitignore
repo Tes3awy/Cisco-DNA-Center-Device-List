@@ -80,3 +80,4 @@ net_health
 .coveragerc
 .coverage
 htmlcov
+run.bat
