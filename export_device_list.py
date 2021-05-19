@@ -186,24 +186,10 @@ def export_device_list(device_list: list, ENV: dict):
         try:
             workbook.close()
             cprint("export_device_list:", "magenta")
-            cprint(f"'{workbook_title}' Excel file is created successfully!", "cyan")
-            try:
-                decision = (
-                    input(f"Do you want to open '{workbook_title}' now? [y/N]: ") or "N"
-                )
-                if decision in ("Y", "y"):
-                    cprint(f"Opening '{workbook_title}', please wait ...\n", "cyan")
-                    time.sleep(1)
-                    xlsxviewer.open(os.path.abspath(workbook_title))
-                elif decision in ("N", "n"):
-                    cprint(
-                        f"INFO: '{workbook_title}' is saved in your current directory\n",
-                        "blue",
-                    )
-                else:
-                    raise SystemExit(cprint("Invalid input value!\n", "red"))
-            except KeyboardInterrupt as err:
-                raise SystemExit(cprint("\nProcess interupted by the user", "yellow"))
+            cprint(
+                f"INFO: '{workbook_title}' is saved in your current directory\n",
+                "blue",
+            )
         except xlsxwriter.exceptions.FileCreateError as err:
             raise SystemExit(
                 cprint(
