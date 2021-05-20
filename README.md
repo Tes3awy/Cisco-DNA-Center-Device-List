@@ -76,6 +76,11 @@ Voila :sparkles:! An Excel file is created automatically from the device list on
 
 > **NOTE:** You should close the Excel program before sending any new requests.
 
+**For Windows Users ONLY**
+
+You will be notified with a native toast notification upon script successful completion.
+![Toast Notification](assets/toast-notification.png)
+
 ### Collected Data from Response
 
 1. Hostname
@@ -111,7 +116,7 @@ DOMAIN=10.10.1.1 # without a trailing slash (/)
 BASE_URL=https://${DOMAIN}
 USERNAME=root
 PASSWORD=CiscoAdmin!2345
-SSL_CERTIFICATE=False # set to True if you have a SSL valid certificate
+SSL_CERTIFICATE=False # set to True if you have valid SSL certificate
 ```
 
 ### References
