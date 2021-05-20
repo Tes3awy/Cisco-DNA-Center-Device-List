@@ -81,3 +81,4 @@ net_health
 .coverage
 htmlcov
 run.bat
+*.xml
