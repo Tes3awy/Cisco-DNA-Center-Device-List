@@ -17,6 +17,7 @@
 # -----------------------------------------------------------------------------------------
 
 # Import Modules
+import platform
 import time
 
 from dotenv import dotenv_values
@@ -26,6 +27,7 @@ from export_device_list import export_device_list
 from get_auth_token import get_auth_token
 from get_device_list import get_device_list
 from get_network_health import get_network_health
+from notify import notify
 
 # ENV Variables in current project
 ENV = {
@@ -55,6 +57,10 @@ def main():
 
     # Print Elasped time
     print(f"\nElapsed time: {time.process_time() - start_time}")
+
+    # Send notification for Windows users ONLY
+    if platform.system() == "Windows":
+        notify()
 
 
 if __name__ == "__main__":
