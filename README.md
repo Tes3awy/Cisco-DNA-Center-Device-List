@@ -34,9 +34,11 @@ $ pip install -r requirements.txt
 │   main.py
 │   get_auth_token.py
 │   get_device_list.py
+│   get_device_config.py
+│   get_network_health.py
 │   export_device_list.py
 │   export_device_config.py
-│   get_network_health.py
+│   export_network_health.py
 │   .env.example
 │   requirements.txt
 │   README.md
@@ -58,9 +60,9 @@ $ pip install -r requirements.txt
 
 ### Usage
 
-You need to provide your DNA Center credentials in a `.env` file. Create a `.env` file from `.env.example` and **DON'T** delete the latter (Check **Use it for your DNA Center** section).
+You need to provide your Cisco DNA Center credentials in a `.env` file. Create a `.env` file from `.env.example` and **DON'T** delete the latter (Check **Use it for your DNA Center** section).
 
-> **A `.env` file in the current working directory will override the `.env.example`.**
+> **A `.env` file in the current working directory will override the `.env.example` values.**
 
 **Then run:**
 
@@ -68,11 +70,9 @@ You need to provide your DNA Center credentials in a `.env` file. Create a `.env
 python main.py
 ```
 
-Voila :sparkles:! An Excel file is created automatically from the device list on Cisco DNAC in the current working directory, configuration files of those devices are created in `configs/<DOMAIN>/<today>/<config_id>_<today>.txt`, and a network health diagram **(a bar chart with legend)** is created in `net_health/<BASE_URL>-<today>.jpg`.
+Voila :sparkles:! An Excel file is created automatically from the device list on Cisco DNAC in the current working directory, configuration files of those devices are created in `configs/<DOMAIN>/<today>/<config_id>_<today>.txt`, and a network health diagram **(a bar chart with a legend)** is created in `net_health/<BASE_URL>-<today>.jpg`.
 
-> You will be prompted either to open the generated Excel file or just skip and continue running the program.
-
-> `XlsxWriter` does not give you the option to append new data to a created opened file (As with text files). So every time you send a request, the Excel file will be overwritten.
+> `XlsxWriter` library does not give you the option to append new data to a created opened Excel file (As with text files). So every time you send a request, the Excel file will be overwritten.
 
 > **NOTE:** You should close the Excel program before sending any new requests.
 
@@ -81,7 +81,7 @@ Voila :sparkles:! An Excel file is created automatically from the device list on
 You will be notified with a native toast notification upon script successful completion.
 ![Toast Notification](assets/toast-notification.png)
 
-### Collected Data from Response
+### Collected Data from Device List Response
 
 1. Hostname
 2. Device ID
@@ -97,7 +97,7 @@ You will be notified with a native toast notification upon script successful com
 
 ### Use it for your DNA Center
 
-This program is ready to be used for your deployed DNA Center.
+This program is ready to be used for your deployed Cisco DNA Center.
 
 **Create a `.env` file from `.env.example`:**
 
@@ -116,7 +116,7 @@ DOMAIN=10.10.1.1 # without a trailing slash (/)
 BASE_URL=https://${DOMAIN}
 USERNAME=root
 PASSWORD=CiscoAdmin!2345
-SSL_CERTIFICATE=False # set to True if you have valid SSL certificate
+SSL_CERTIFICATE=False # set to True ONLY if you have valid SSL certificate
 ```
 
 ### References
@@ -131,7 +131,7 @@ SSL_CERTIFICATE=False # set to True if you have valid SSL certificate
 
 ### Previews
 
-**_Logs_**
+**_Script Logs_**
 ![Script Logs](assets/script-logs.png)
 
 **_Excel File Preview_**
