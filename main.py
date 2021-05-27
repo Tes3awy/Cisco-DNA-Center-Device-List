@@ -22,11 +22,18 @@ import time
 
 from dotenv import dotenv_values
 
+# Export modules
 from export_device_config import export_device_config
 from export_device_list import export_device_list
+from export_network_health import export_network_health
+
+# Get modules
 from get_auth_token import get_auth_token
+from get_device_config import get_device_config
 from get_device_list import get_device_list
 from get_network_health import get_network_health
+
+# Notification module
 from notify import notify
 
 # ENV Variables in current project
@@ -49,11 +56,17 @@ def main():
     # Export devices to Excel sheet
     export_device_list(device_list, ENV)
 
-    # Export device configs to .txt files
-    export_device_config(token, ENV)
+    # Obtain device configs
+    device_configs = get_device_config(token, ENV)
+
+    # Export device configs to text files
+    export_device_config(device_configs, ENV)
 
     # Obtain network health
-    get_network_health(token, ENV)
+    network_health = get_network_health(token, ENV)
+
+    # Export matplotlib bar chart of network health
+    export_network_health(network_health, ENV)
 
     # Print Elasped time
     print(f"\nElapsed time: {time.process_time() - start_time}")

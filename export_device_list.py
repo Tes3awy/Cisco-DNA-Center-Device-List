@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 
 import datetime
-import os
-import time
-import webbrowser as xlsxviewer
 
 import xlsxwriter
 from colorama import init
@@ -48,30 +45,40 @@ def export_device_list(device_list: list, ENV: dict):
     )
 
     # Set Columns Width
-    worksheet.set_column("A:A", 15)
-    worksheet.set_column("B:B", 35.56)
-    worksheet.set_column("C:C", 19.78)
-    worksheet.set_column("D:D", 16.56)
-    worksheet.set_column("E:E", 20)
-    worksheet.set_column("F:F", 15.67)
-    worksheet.set_column("G:G", 14.33)
-    worksheet.set_column("H:H", 12)
-    worksheet.set_column("I:I", 18.22)
-    worksheet.set_column("J:J", 17.33)
-    worksheet.set_column("K:K", 14.89)
+    column_widths = {
+        "A:A": 15,
+        "B:B": 35.56,
+        "C:C": 19.78,
+        "D:D": 16.56,
+        "E:E": 20,
+        "F:F": 15.67,
+        "G:G": 14.33,
+        "H:H": 12,
+        "I:I": 18.22,
+        "J:J": 17.33,
+        "K:K": 14.89,
+    }
 
-    # Header cells
-    worksheet.write_string("A1", "Hostname", header_cell_format)
-    worksheet.write_string("B1", "Device ID", header_cell_format)
-    worksheet.write_string("C1", "MGMT IP Address", header_cell_format)
-    worksheet.write_string("D1", "Serial Number", header_cell_format)
-    worksheet.write_string("E1", "Mac Address", header_cell_format)
-    worksheet.write_string("F1", "Platform ID", header_cell_format)
-    worksheet.write_string("G1", "IOS Version", header_cell_format)
-    worksheet.write_string("H1", "Role", header_cell_format)
-    worksheet.write_string("I1", "Up Time", header_cell_format)
-    worksheet.write_string("J1", "Last Updated", header_cell_format)
-    worksheet.write_string("K1", "Reachability", header_cell_format)
+    for range, width in column_widths.items():
+        worksheet.set_column(range, width)
+
+    # Header line cells
+    header = {
+        "A1": "Hostname",
+        "B1": "Device ID",
+        "C1": "MGMT IP Address",
+        "D1": "Serial Number",
+        "E1": "MAC Address",
+        "F1": "Platform ID",
+        "G1": "IOS Version",
+        "H1": "Role",
+        "I1": "Up Time",
+        "J1": "Last Updated",
+        "K1": "Reachability",
+    }
+
+    for key, value in header.items():
+        worksheet.write_string(key, value, header_cell_format)
 
     # Set Excel file properties
     workbook.set_properties(
@@ -167,7 +174,7 @@ def export_device_list(device_list: list, ENV: dict):
 
     # Save each device in a seperate row
     for device in device_list:
-        worksheet.write(row, col, device["hostname"], cell_format)
+        worksheet.write(row, col + 0, device["hostname"], cell_format)
         worksheet.write(row, col + 1, device["id"], cell_format)
         worksheet.write(row, col + 2, device["managementIpAddress"], cell_format)
         worksheet.write(row, col + 3, device["serialNumber"], serial_cell_format)
