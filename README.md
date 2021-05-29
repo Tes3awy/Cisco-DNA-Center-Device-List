@@ -39,6 +39,7 @@ $ pip install -r requirements.txt
 │   export_device_list.py
 │   export_device_config.py
 │   export_network_health.py
+│   notify.py
 │   .env.example
 │   requirements.txt
 │   README.md
