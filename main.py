@@ -69,11 +69,11 @@ def main():
     export_network_health(network_health, ENV)
 
     # Print Elasped time
-    print(f"\nElapsed time: {time.process_time() - start_time}")
+    print(f"\nElapsed time: {round(time.process_time() - start_time, 2)}")
 
     # Send notification for Windows users ONLY
     if platform.system() == "Windows":
-        notify()
+        notify("Congratulations! Python script ran successfully")
 
 
 if __name__ == "__main__":
