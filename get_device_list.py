@@ -4,8 +4,9 @@ from distutils.util import strtobool
 
 import requests
 from colorama import init
+from requests.exceptions import HTTPError
 from requests.packages import urllib3
-from termcolor import cprint
+from termcolor import colored, cprint
 
 # Disable SSL warnings. Not needed in production environments with valid certificates
 # (REMOVE if you are not sure of its purpose)
@@ -51,7 +52,7 @@ def get_device_list(token: str, ENV: dict) -> list:
             "green",
         )
         return response.json()["response"]
-    except requests.exceptions.HTTPError as err:
-        raise SystemExit(cprint(err, "red"))
+    except HTTPError as err:
+        raise SystemExit(colored(err, "red"))
     except KeyboardInterrupt:
-        raise SystemExit(cprint("Process interrupted by the user", "yellow"))
+        raise SystemExit(colored("Process interrupted by the user", "yellow"))

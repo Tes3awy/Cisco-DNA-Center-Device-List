@@ -1,28 +1,25 @@
 #!/usr/bin/env python3
 
-import datetime
+from datetime import date
 
 import xlsxwriter
 from colorama import init
-from termcolor import cprint
+from termcolor import colored, cprint
 
 # use Colorama to make Termcolor work on Windows too
 init(autoreset=True)
 
 
-def export_device_list(device_list: list, ENV: dict):
+def export_device_list(device_list: list, ENV: dict) -> None:
     """Exports Device List to an Excel file
 
     Args:
         devices (list): Device List to export
         ENV (dict): Environment Variables
-
-    Raises:
-        SystemExit: HTTP Errors
     """
 
     # Vars
-    today = datetime.date.today()
+    today = date.today()
     workbook_title = f"{ENV['DOMAIN']}-DNA-Center_{str(today)}.xlsx"
 
     # Create Excel file
@@ -30,10 +27,11 @@ def export_device_list(device_list: list, ENV: dict):
     worksheet = workbook.add_worksheet(ENV["DOMAIN"])
     worksheet_range = "$A:$K"
     worksheet.autofilter("A1:K1")
+    worksheet.freeze_panes(1, 1)
     worksheet.set_column(worksheet_range, 20)
 
     # Header cells format
-    header_cell_format = workbook.add_format(
+    header_cell_frmt = workbook.add_format(
         {
             "border": True,
             "bold": True,
@@ -78,7 +76,7 @@ def export_device_list(device_list: list, ENV: dict):
     }
 
     for key, value in header.items():
-        worksheet.write_string(key, value, header_cell_format)
+        worksheet.write_string(key, value, header_cell_frmt)
 
     # Set Excel file properties
     workbook.set_properties(
@@ -96,11 +94,11 @@ def export_device_list(device_list: list, ENV: dict):
     )
 
     # Entry cells format
-    cell_format = workbook.add_format(
+    cell_frmt = workbook.add_format(
         {"border": True, "align": "center", "valign": "vcenter"}
     )
 
-    serial_cell_format = workbook.add_format(
+    serial_cell_frmt = workbook.add_format(
         {
             "border": True,
             "align": "center",
@@ -109,7 +107,7 @@ def export_device_list(device_list: list, ENV: dict):
         }
     )
 
-    mac_cell_format = workbook.add_format(
+    mac_cell_frmt = workbook.add_format(
         {
             "border": True,
             "align": "center",
@@ -174,17 +172,17 @@ def export_device_list(device_list: list, ENV: dict):
 
     # Save each device in a seperate row
     for device in device_list:
-        worksheet.write(row, col + 0, device["hostname"], cell_format)
-        worksheet.write(row, col + 1, device["id"], cell_format)
-        worksheet.write(row, col + 2, device["managementIpAddress"], cell_format)
-        worksheet.write(row, col + 3, device["serialNumber"], serial_cell_format)
-        worksheet.write(row, col + 4, device["macAddress"], mac_cell_format)
-        worksheet.write(row, col + 5, device["platformId"], cell_format)
-        worksheet.write(row, col + 6, device["softwareVersion"], cell_format)
-        worksheet.write(row, col + 7, device["role"].title(), cell_format)
-        worksheet.write(row, col + 8, device["upTime"], cell_format)
-        worksheet.write(row, col + 9, device["lastUpdated"], cell_format)
-        worksheet.write(row, col + 10, device["reachabilityStatus"], cell_format)
+        worksheet.write(row, col + 0, device["hostname"], cell_frmt)
+        worksheet.write(row, col + 1, device["id"], cell_frmt)
+        worksheet.write(row, col + 2, device["managementIpAddress"], cell_frmt)
+        worksheet.write(row, col + 3, device["serialNumber"], serial_cell_frmt)
+        worksheet.write(row, col + 4, device["macAddress"], mac_cell_frmt)
+        worksheet.write(row, col + 5, device["platformId"], cell_frmt)
+        worksheet.write(row, col + 6, device["softwareVersion"], cell_frmt)
+        worksheet.write(row, col + 7, device["role"].title(), cell_frmt)
+        worksheet.write(row, col + 8, device["upTime"], cell_frmt)
+        worksheet.write(row, col + 9, device["lastUpdated"], cell_frmt)
+        worksheet.write(row, col + 10, device["reachabilityStatus"], cell_frmt)
 
         row += 1
 
@@ -199,7 +197,7 @@ def export_device_list(device_list: list, ENV: dict):
             )
         except xlsxwriter.exceptions.FileCreateError as err:
             raise SystemExit(
-                cprint(
+                colored(
                     f"Exception caught in workbook.close(): {err}\n"
                     f"Please close '{workbook_title}' file if it is already open in Microsoft Excel or in use by another program.",
                     "red",

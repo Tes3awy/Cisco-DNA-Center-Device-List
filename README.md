@@ -1,10 +1,16 @@
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/Tes3awy/Cisco-DNA-Center-Device-List)
-[![Visual Studio Code](https://img.shields.io/badge/VSCode-1.56.0-blue.svg?logo=visual-studio-code)](https://code.visualstudio.com/)
-[![Tested on Python 3.9.4](https://img.shields.io/badge/Tested%20-Python%203.9.4-blue.svg?logo=python)](https://www.python.org/downloads)
+![Language](https://img.shields.io/github/languages/top/Tes3awy/Cisco-DNA-Center-Device-List)
+[![Visual Studio Code](https://img.shields.io/badge/1.57.1-blue.svg?logo=visual-studio-code)](https://code.visualstudio.com/)
+[![Tested on Python 3.9.4](https://img.shields.io/badge/Python%203.6+-white.svg?logo=python)](https://www.python.org/downloads)
+[![Issues Open](https://img.shields.io/github/issues/Tes3awy/Cisco-DNA-Center-Device-List)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List/issues)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/Tes3awy/Cisco-DNA-Center-Device-List)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List/commits/main)
+![Last Commit](https://img.shields.io/github/last-commit/Tes3awy/Cisco-DNA-Center-Device-List)
 [![Code Size](https://img.shields.io/github/languages/code-size/Tes3awy/Cisco-DNA-Center-Device-List?color=green)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List)
 [![Contributions Welcome](https://img.shields.io/static/v1.svg?label=Contributions&message=Welcome&color=0059b3)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List/blob/main/CONTRIBUTING.md)
 [![License](https://img.shields.io/github/license/Tes3awy/Cisco-DNA-Center-Device-List)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Pre-Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
 # Cisco DNA Center Device List, Device Config, and Network Health
 
