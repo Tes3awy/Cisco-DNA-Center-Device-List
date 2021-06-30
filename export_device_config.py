@@ -15,7 +15,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 init(autoreset=True)
 
 # Export device configs to text files
-def export_device_config(device_configs: dict, ENV: dict):
+def export_device_config(device_configs: dict, ENV: dict) -> None:
     """Exports device configurations into text files
 
     Args:
@@ -36,7 +36,7 @@ def export_device_config(device_configs: dict, ENV: dict):
     cprint("export_device_config:", "magenta")
 
     for config in device_configs:
-        cfg = config["runningConfig"].strip()
+        cfg = config["runningConfig"].lstrip()
         config_id = config["id"]
         cfg_file_name = f"{config_id}_{today}.txt"
         # Create a config file

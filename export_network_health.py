@@ -12,7 +12,7 @@ from termcolor import cprint
 init(autoreset=True)
 
 
-def export_network_health(network_health: dict, ENV: dict):
+def export_network_health(network_health: dict, ENV: dict) -> None:
     """Exports network health into a matplotlib bar chart
 
     Args:
