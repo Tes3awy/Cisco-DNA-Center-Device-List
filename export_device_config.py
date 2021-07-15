@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 
 import os
-from datetime import datetime
+from datetime import date
 
 from colorama import init
 from requests.packages import urllib3
 from termcolor import cprint
+from urllib3.exceptions import InsecureRequestWarning
 
 # Disable SSL warnings. Not needed in production environments with valid certificates
 # (REMOVE if you are not sure of its purpose)
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+urllib3.disable_warnings(InsecureRequestWarning)
 
 # use Colorama to make Termcolor work on Windows too
 init(autoreset=True)
@@ -24,7 +25,7 @@ def export_device_config(device_configs: dict, ENV: dict) -> None:
     """
 
     # Today's date
-    today = datetime.today().strftime("%Y-%m-%d")
+    today = date.today()
 
     # Create configs directory if not created
     DIR = "configs"
@@ -40,7 +41,9 @@ def export_device_config(device_configs: dict, ENV: dict) -> None:
         config_id = config["id"]
         cfg_file_name = f"{config_id}_{today}.txt"
         # Create a config file
-        with open(os.path.join(CONFIGS_DIR, cfg_file_name), "w") as config_file:
+        with open(
+            file=os.path.join(CONFIGS_DIR, cfg_file_name), mode="w"
+        ) as config_file:
             config_file.write(cfg)
         cprint(
             f"'{cfg_file_name}' config file is created successfully!",

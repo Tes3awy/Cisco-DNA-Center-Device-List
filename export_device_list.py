@@ -2,9 +2,10 @@
 
 from datetime import date
 
-import xlsxwriter
 from colorama import init
 from termcolor import colored, cprint
+from xlsxwriter import Workbook
+from xlsxwriter.exceptions import FileCreateError
 
 # use Colorama to make Termcolor work on Windows too
 init(autoreset=True)
@@ -23,7 +24,7 @@ def export_device_list(device_list: list, ENV: dict) -> None:
     workbook_title = f"{ENV['DOMAIN']}-DNA-Center_{str(today)}.xlsx"
 
     # Create Excel file
-    workbook = xlsxwriter.Workbook(workbook_title, {"constant_memory": True})
+    workbook = Workbook(workbook_title, {"constant_memory": True})
     worksheet = workbook.add_worksheet(ENV["DOMAIN"])
     worksheet_range = "$A:$K"
     worksheet.autofilter("A1:K1")
@@ -41,24 +42,6 @@ def export_device_list(device_list: list, ENV: dict) -> None:
             "valign": "vcenter",
         }
     )
-
-    # Set Columns Width
-    column_widths = {
-        "A:A": 15,
-        "B:B": 35.56,
-        "C:C": 19.78,
-        "D:D": 16.56,
-        "E:E": 20,
-        "F:F": 15.67,
-        "G:G": 14.33,
-        "H:H": 12,
-        "I:I": 18.22,
-        "J:J": 17.33,
-        "K:K": 14.89,
-    }
-
-    for range, width in column_widths.items():
-        worksheet.set_column(range, width)
 
     # Header line cells
     header = {
@@ -186,7 +169,7 @@ def export_device_list(device_list: list, ENV: dict) -> None:
 
         row += 1
 
-    # Open workbook
+    # Close workbook
     while True:
         try:
             workbook.close()
@@ -195,10 +178,10 @@ def export_device_list(device_list: list, ENV: dict) -> None:
                 f"INFO: '{workbook_title}' is saved in your current directory\n",
                 "blue",
             )
-        except xlsxwriter.exceptions.FileCreateError as err:
+        except FileCreateError as e:
             raise SystemExit(
                 colored(
-                    f"Exception caught in workbook.close(): {err}\n"
+                    f"Exception caught in workbook.close(): {e}\n"
                     f"Please close '{workbook_title}' file if it is already open in Microsoft Excel or in use by another program.",
                     "red",
                 )

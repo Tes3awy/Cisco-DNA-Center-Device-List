@@ -8,10 +8,11 @@ from colorama import init
 from requests.exceptions import HTTPError
 from requests.packages import urllib3
 from termcolor import colored, cprint
+from urllib3.exceptions import InsecureRequestWarning
 
 # Disable SSL warnings. Not needed in production environments with valid certificates
 # (REMOVE if you are not sure of its purpose)
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+urllib3.disable_warnings(InsecureRequestWarning)
 
 # use Colorama to make Termcolor work on Windows too
 init(autoreset=True)

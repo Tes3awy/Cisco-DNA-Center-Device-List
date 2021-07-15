@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-from datetime import datetime
+from datetime import date
 
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
@@ -41,7 +41,7 @@ def export_network_health(network_health: dict, ENV: dict) -> None:
         os.makedirs(NET_HEALTH_DIR)
 
     # Today's date
-    today = datetime.today().strftime("%Y-%m-%d")
+    today = date.today()
 
     # Image to save
     NET_HEALTH_FIG = os.path.join(NET_HEALTH_DIR, f"{FIG_NAME}-{today}.jpg")
