@@ -1,28 +1,26 @@
 #!/usr/bin/env python3
 
 from distutils.util import strtobool
+from typing import AnyStr, Dict
 
 import requests
-from colorama import init
-from requests.exceptions import HTTPError
+from requests.exceptions import ConnectionError, HTTPError
 from requests.packages import urllib3
 from termcolor import colored, cprint
 from urllib3.exceptions import InsecureRequestWarning
 
 # Disable SSL warnings. Not needed in production environments with valid certificates
 # (REMOVE if you are not sure of its purpose)
-urllib3.disable_warnings(InsecureRequestWarning)
+urllib3.disable_warnings(category=InsecureRequestWarning)
 
-# use Colorama to make Termcolor work on Windows too
-init(autoreset=True)
 
 # Export device configs to text files
-def get_device_config(token: str, ENV: dict) -> dict:
+def get_device_config(token: AnyStr, ENV: Dict) -> Dict:
     """Gets device configurations
 
     Args:
-        token (str): Cisco DNA Center Token
-        ENV (dict): Environment Variables
+        token (AnyStr): Cisco DNA Center Token
+        ENV (Dict): Environment Variables
 
     Raises:
         SystemExit: HTTP Errors
@@ -38,25 +36,23 @@ def get_device_config(token: str, ENV: dict) -> dict:
         "Accept": "application/json",
     }
 
-    DEVICE_CONFIG_URL = "/dna/intent/api/v1/network-device/config"
+    DEVICE_CONFIG_URL = "dna/intent/api/v1/network-device/config"
 
     try:
+        cprint("Getting device configurations", "magenta")
         response = requests.get(
-            f"{ENV['BASE_URL']}{DEVICE_CONFIG_URL}",
+            url=f"{ENV['BASE_URL']}/{DEVICE_CONFIG_URL}",
             headers=headers,
             data=None,
-            verify=True if strtobool(ENV["SSL_CERTIFICATE"]) else False,
+            verify=True if strtobool(val=ENV["SSL_CERTIFICATE"]) else False,
         )
         response.raise_for_status()
-        cprint("get_device_config:", "magenta")
-        cprint(
-            "The request was successful. The result is contained in the response body.\n",
-            "green",
-        )
-
-        return response.json()["response"]
-
-    except HTTPError as err:
-        raise SystemExit(colored(err, "red"))
+    except HTTPError as e:
+        raise SystemExit(colored(e, "red"))
+    except ConnectionError as e:
+        raise SystemExit(colored(e, "red"))
     except KeyboardInterrupt:
         raise SystemExit(colored("Process interrupted by the user", "yellow"))
+    else:
+        cprint("The request was successful.\n", "green")
+        return response.json()["response"]

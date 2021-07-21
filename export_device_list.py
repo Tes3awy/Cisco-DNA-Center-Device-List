@@ -1,22 +1,19 @@
 #!/usr/bin/env python3
 
 from datetime import date
+from typing import Dict, List
 
-from colorama import init
 from termcolor import colored, cprint
 from xlsxwriter import Workbook
 from xlsxwriter.exceptions import FileCreateError
 
-# use Colorama to make Termcolor work on Windows too
-init(autoreset=True)
 
-
-def export_device_list(device_list: list, ENV: dict) -> None:
+def export_device_list(device_list: List, ENV: Dict) -> None:
     """Exports Device List to an Excel file
 
     Args:
-        devices (list): Device List to export
-        ENV (dict): Environment Variables
+        devices (List): Device List to export
+        ENV (Dict): Environment Variables
     """
 
     # Vars
@@ -32,7 +29,7 @@ def export_device_list(device_list: list, ENV: dict) -> None:
     worksheet.set_column(worksheet_range, 20)
 
     # Header cells format
-    header_cell_frmt = workbook.add_format(
+    h_frmt = workbook.add_format(
         {
             "border": True,
             "bold": True,
@@ -59,7 +56,7 @@ def export_device_list(device_list: list, ENV: dict) -> None:
     }
 
     for key, value in header.items():
-        worksheet.write_string(key, value, header_cell_frmt)
+        worksheet.write_string(key, value, h_frmt)
 
     # Set Excel file properties
     workbook.set_properties(
@@ -67,9 +64,10 @@ def export_device_list(device_list: list, ENV: dict) -> None:
             "title": ENV["DOMAIN"],
             "subject": "Cisco DNA Center",
             "author": "Osama Abbas",
+            "manager": "Osama Abbas",
             "hyperlink_base": ENV["BASE_URL"],
             "category": "Technology",
-            "keywords": "Cisco, DNAC, DevNet, Python, API",
+            "keywords": "Cisco, DNAC, Cisco DevNet, Python3, APIs",
             "created": today,
             "comments": "Created with Python and XlsxWriter",
             "status": "Completed",
@@ -150,8 +148,7 @@ def export_device_list(device_list: list, ENV: dict) -> None:
     )
 
     # Row and Column initial values
-    row = 1
-    col = 0
+    row, col = 1, 0
 
     # Save each device in a seperate row
     for device in device_list:
@@ -173,11 +170,8 @@ def export_device_list(device_list: list, ENV: dict) -> None:
     while True:
         try:
             workbook.close()
-            cprint("export_device_list:", "magenta")
-            cprint(
-                f"INFO: '{workbook_title}' is saved in your current directory\n",
-                "blue",
-            )
+            cprint("Exporting device list", "magenta")
+            cprint(f"INFO: '{workbook_title}' is saved in your PWD.\n", "blue")
         except FileCreateError as e:
             raise SystemExit(
                 colored(
