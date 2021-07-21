@@ -1,7 +1,6 @@
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/Tes3awy/Cisco-DNA-Center-Device-List)
 ![Language](https://img.shields.io/github/languages/top/Tes3awy/Cisco-DNA-Center-Device-List)
-[![Visual Studio Code](https://img.shields.io/badge/1.57.1-blue.svg?logo=visual-studio-code)](https://code.visualstudio.com/)
-[![Tested on Python 3.9.4](https://img.shields.io/badge/Python%203.6+-white.svg?logo=python)](https://www.python.org/downloads)
+[![Tested on Python 3.9.6](https://img.shields.io/badge/Python%203.8+-white.svg?logo=python)](https://www.python.org/downloads)
 [![Issues Open](https://img.shields.io/github/issues/Tes3awy/Cisco-DNA-Center-Device-List)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List/issues)
 [![Commit Activity](https://img.shields.io/github/commit-activity/m/Tes3awy/Cisco-DNA-Center-Device-List)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List/commits/main)
 ![Last Commit](https://img.shields.io/github/last-commit/Tes3awy/Cisco-DNA-Center-Device-List)
@@ -31,7 +30,7 @@ This program is designed to export a Cisco DNAC device list and save them to an 
 ```bash
 $ git clone https://github.com/Tes3awy/Cisco-DNA-Center-Device-List.git
 $ cd Cisco-DNA-Center-Device-List
-$ pip install -r requirements.txt
+$ pip install -r requirements.txt --user
 ```
 
 ### Getting Started
@@ -51,6 +50,7 @@ $ pip install -r requirements.txt
 │   README.md
 │   CONTRIBUTING.md
 │   CODE_OF_CONDUCT.md
+│   .pre-commit-config.yaml
 │   .gitignore
 │   LICENSE
 │
@@ -79,9 +79,9 @@ python main.py
 
 Voila :sparkles:! An Excel file is created automatically from the device list on Cisco DNAC in the current working directory, configuration files of those devices are created in `configs/<DOMAIN>/<today>/<config_id>_<today>.txt`, and a network health diagram **(a bar chart with a legend)** is created in `net_health/<BASE_URL>-<today>.jpg`.
 
-> `XlsxWriter` library does not give you the option to append new data to a created opened Excel file (As with text files). So every time you send a request, the Excel file will be overwritten.
+> Unlike handling text files, `XlsxWriter` library does not have the option of appending new data to a created Excel file. So every time you run the script, the Excel file will be overwritten.
 
-> **NOTE:** You should close the Excel program before sending any new requests.
+> **NOTE:** You have to close the Excel program before re-running the script.
 
 **For Windows Users ONLY**
 
@@ -120,15 +120,16 @@ Repalce the `.env` file values with your Cisco DNA Center credentials.
 
 ```vim
 DOMAIN=10.10.1.1 # without a trailing slash (/)
-BASE_URL=https://${DOMAIN}
+PORT=443
+BASE_URL=https://${DOMAIN}:${PORT}
 USERNAME=root
-PASSWORD=CiscoAdmin!2345
-SSL_CERTIFICATE=False # set to True ONLY if you have valid SSL certificate
+PASSWORD=C1sco12345
+SSL_CERTIFICATE=False  # set to True ONLY if you have valid SSL certificate
 ```
 
 ### References
 
-**APIs List**
+**API Endpoints**
 
 [DNA Center Platform](https://developer.cisco.com/docs/dna-center/#!authentication-api)
 

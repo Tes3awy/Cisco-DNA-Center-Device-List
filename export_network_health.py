@@ -2,22 +2,19 @@
 
 import os
 from datetime import date
+from typing import Dict
 
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
-from colorama import init
 from termcolor import cprint
 
-# use Colorama to make Termcolor work on Windows too
-init(autoreset=True)
 
-
-def export_network_health(network_health: dict, ENV: dict) -> None:
+def export_network_health(network_health: Dict, ENV: Dict) -> None:
     """Exports network health into a matplotlib bar chart
 
     Args:
-        network_health (dict): Network health
-        ENV (dict): Environment Variables
+        network_health (Dict): Network health
+        ENV (Dict): Environment Variables
     """
 
     # Values on x-axis
@@ -84,5 +81,5 @@ def export_network_health(network_health: dict, ENV: dict) -> None:
     # Save plot to net_health/*.jpg
     plt.savefig(NET_HEALTH_FIG, dpi=300)
 
-    cprint("export_network_health:", "magenta")
-    cprint(f"Please check '{NET_HEALTH_FIG}'", "cyan")
+    cprint("Exporting network health", "magenta")
+    cprint(f"Please check '{NET_HEALTH_FIG}'", "blue")

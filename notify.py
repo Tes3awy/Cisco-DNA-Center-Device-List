@@ -2,16 +2,17 @@
 
 import os
 from datetime import datetime
+from typing import AnyStr
 
-import winrt.windows.data.xml.dom as dom
-import winrt.windows.ui.notifications as notifications
+from winrt.windows.data.xml import dom
+from winrt.windows.ui import notifications
 
 
-def notify(message: str):
-    """Creates a Native Toast pn Windows
+def notify(message: AnyStr):
+    """Creates a Native Toast on Windows
 
     Args:
-        message (str): Toast Message
+        message (AnyStr): Toast Message
     """
 
     # appID of Task Scheduler

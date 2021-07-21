@@ -2,50 +2,36 @@
 
 import os
 from datetime import date
+from typing import AnyStr, Dict
 
-from colorama import init
-from requests.packages import urllib3
 from termcolor import cprint
-from urllib3.exceptions import InsecureRequestWarning
 
-# Disable SSL warnings. Not needed in production environments with valid certificates
-# (REMOVE if you are not sure of its purpose)
-urllib3.disable_warnings(InsecureRequestWarning)
-
-# use Colorama to make Termcolor work on Windows too
-init(autoreset=True)
 
 # Export device configs to text files
-def export_device_config(device_configs: dict, ENV: dict) -> None:
+def export_device_config(device_configs: Dict, ENV: Dict) -> None:
     """Exports device configurations into text files
 
     Args:
-        device_configs (dict): Device configurations
-        ENV (dict): Environment variables
+        device_configs (Dict): Device configurations
+        ENV (Dict): Environment variables
     """
 
     # Today's date
     today = date.today()
 
     # Create configs directory if not created
-    DIR = "configs"
-    os.makedirs(DIR, exist_ok=True)
+    os.makedirs("configs", exist_ok=True)
 
-    CONFIGS_DIR = f'{DIR}/{ENV["DOMAIN"]}/{today}'
+    CONFIGS_DIR = f'configs/{ENV["DOMAIN"]}/{today}'
     os.makedirs(f"{CONFIGS_DIR}", exist_ok=True)
 
-    cprint("export_device_config:", "magenta")
+    cprint("Exporting device configurations", "magenta")
 
     for config in device_configs:
-        cfg = config["runningConfig"].lstrip()
-        config_id = config["id"]
-        cfg_file_name = f"{config_id}_{today}.txt"
+        cfg: AnyStr = config["runningConfig"]
+        cfg_id = config["id"]
+        cfg_fname = f"{cfg_id}_{today}.txt"
         # Create a config file
-        with open(
-            file=os.path.join(CONFIGS_DIR, cfg_file_name), mode="w"
-        ) as config_file:
-            config_file.write(cfg)
-        cprint(
-            f"'{cfg_file_name}' config file is created successfully!",
-            "cyan",
-        )
+        with open(file=os.path.join(CONFIGS_DIR, cfg_fname), mode="w") as cfg_file:
+            cfg_file.write(cfg.lstrip())
+        cprint(f"'{cfg_fname}' config file was created successfully", "cyan")
