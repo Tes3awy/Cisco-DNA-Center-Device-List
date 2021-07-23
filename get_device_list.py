@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from distutils.util import strtobool
-from typing import AnyStr, Dict, List
+from typing import Any, AnyStr, Dict, List
 
 import requests
 from requests.exceptions import ConnectionError, HTTPError
@@ -14,18 +14,29 @@ from urllib3.exceptions import InsecureRequestWarning
 urllib3.disable_warnings(category=InsecureRequestWarning)
 
 
-def get_device_list(token: AnyStr, ENV: Dict) -> List:
+def get_device_list(token: AnyStr, ENV: Dict[AnyStr, Any]) -> List[Dict[AnyStr, Any]]:
     """Gets device list of a Cisco DNA Center
 
-    Args:
-        token (AnyStr): Cisco DNA Center Token
-        ENV (Dict): Environment Variables
+    Parameters
+    ----------
+    token : AnyStr
+        Auth token
+    ENV : Dict[AnyStr, Any]
+        Environment variables
 
-    Raises:
-        SystemExit: HTTP Errors
+    Returns
+    -------
+    List[Dict[AnyStr, Any]]
+        List of network devices
 
-    Returns:
-        List: Device list
+    Raises
+    ------
+    SystemExit
+        HTTPError
+    SystemExit
+        ConnectionError
+    SystemExit
+        KeyboardInterrupt
     """
 
     headers = {
@@ -37,7 +48,7 @@ def get_device_list(token: AnyStr, ENV: Dict) -> List:
     DEVICE_LIST_URL = "dna/intent/api/v1/network-device/"
 
     try:
-        cprint("Getting device list", "magenta")
+        cprint(text="Getting device list", color="magenta")
         response = requests.get(
             url=f"{ENV['BASE_URL']}/{DEVICE_LIST_URL}",
             headers=headers,
@@ -46,11 +57,13 @@ def get_device_list(token: AnyStr, ENV: Dict) -> List:
         )
         response.raise_for_status()
     except HTTPError as e:
-        raise SystemExit(colored(e, "red"))
+        raise SystemExit(colored(text=e, color="red"))
     except ConnectionError as e:
-        raise SystemExit(colored(e, "red"))
+        raise SystemExit(colored(text=e, color="red"))
     except KeyboardInterrupt:
-        raise SystemExit(colored("Process interrupted by the user", "yellow"))
+        raise SystemExit(
+            colored(text="Process interrupted by the user", color="yellow")
+        )
     else:
-        cprint("The request was successful.\n", "green")
+        cprint(text="The request was successful.\n", color="green")
         return response.json()["response"]

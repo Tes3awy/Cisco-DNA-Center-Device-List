@@ -1,19 +1,29 @@
 #!/usr/bin/env python3
 
 from datetime import date
-from typing import Dict, List
+from typing import Any, AnyStr, Dict, List
 
 from termcolor import colored, cprint
 from xlsxwriter import Workbook
 from xlsxwriter.exceptions import FileCreateError
 
 
-def export_device_list(device_list: List, ENV: Dict) -> None:
-    """Exports Device List to an Excel file
+def export_device_list(
+    device_list: List[Dict[AnyStr, Any]], ENV: Dict[AnyStr, Any]
+) -> None:
+    """Exports network device list to an Excel file
 
-    Args:
-        devices (List): Device List to export
-        ENV (Dict): Environment Variables
+    Parameters
+    ----------
+    device_list : List[Dict[AnyStr, Any]]
+        List of network devices
+    ENV : Dict[AnyStr, Any]
+        Environment variables
+
+    Raises
+    ------
+    SystemExit
+        FileCreateError
     """
 
     # Vars
@@ -21,16 +31,16 @@ def export_device_list(device_list: List, ENV: Dict) -> None:
     workbook_title = f"{ENV['DOMAIN']}-DNA-Center_{str(today)}.xlsx"
 
     # Create Excel file
-    workbook = Workbook(workbook_title, {"constant_memory": True})
-    worksheet = workbook.add_worksheet(ENV["DOMAIN"])
+    workbook = Workbook(filename=workbook_title, options={"constant_memory": True})
+    worksheet = workbook.add_worksheet(name=ENV["DOMAIN"])
     worksheet_range = "$A:$K"
     worksheet.autofilter("A1:K1")
     worksheet.freeze_panes(1, 1)
-    worksheet.set_column(worksheet_range, 20)
+    worksheet.set_column(worksheet_range, width=20)
 
     # Header cells format
     h_frmt = workbook.add_format(
-        {
+        properties={
             "border": True,
             "bold": True,
             "font_color": "white",
@@ -55,12 +65,12 @@ def export_device_list(device_list: List, ENV: Dict) -> None:
         "K1": "Reachability",
     }
 
-    for key, value in header.items():
-        worksheet.write_string(key, value, h_frmt)
+    for cell, value in header.items():
+        worksheet.write_string(cell, string=value, cell_format=h_frmt)
 
     # Set Excel file properties
     workbook.set_properties(
-        {
+        properties={
             "title": ENV["DOMAIN"],
             "subject": "Cisco DNA Center",
             "author": "Osama Abbas",
@@ -76,11 +86,11 @@ def export_device_list(device_list: List, ENV: Dict) -> None:
 
     # Entry cells format
     cell_frmt = workbook.add_format(
-        {"border": True, "align": "center", "valign": "vcenter"}
+        properties={"border": True, "align": "center", "valign": "vcenter"}
     )
 
     serial_cell_frmt = workbook.add_format(
-        {
+        properties={
             "border": True,
             "align": "center",
             "valign": "vcenter",
@@ -89,7 +99,7 @@ def export_device_list(device_list: List, ENV: Dict) -> None:
     )
 
     mac_cell_frmt = workbook.add_format(
-        {
+        properties={
             "border": True,
             "align": "center",
             "valign": "vcenter",
@@ -99,7 +109,7 @@ def export_device_list(device_list: List, ENV: Dict) -> None:
 
     # Red Format
     red_format = workbook.add_format(
-        {
+        properties={
             "border": True,
             "align": "center",
             "valign": "vcenter",
@@ -109,7 +119,7 @@ def export_device_list(device_list: List, ENV: Dict) -> None:
     )
     worksheet.conditional_format(
         "K2:K1048576",
-        {
+        options={
             "type": "text",
             "criteria": "containing",
             "value": "Unreachable",
@@ -119,7 +129,7 @@ def export_device_list(device_list: List, ENV: Dict) -> None:
 
     # Green Format
     green_format = workbook.add_format(
-        {
+        properties={
             "border": True,
             "align": "center",
             "valign": "vcenter",
@@ -129,7 +139,7 @@ def export_device_list(device_list: List, ENV: Dict) -> None:
     )
     worksheet.conditional_format(
         "K2:K1048576",
-        {
+        options={
             "type": "text",
             "criteria": "containing",
             "value": "Reachable",
@@ -137,13 +147,13 @@ def export_device_list(device_list: List, ENV: Dict) -> None:
         },
     )
 
-    # Highlight non blank rows (alternate) formula
+    # Highlight non blank rows (alternate rows) formula
     worksheet.conditional_format(
         "A2:J1048576",
-        {
+        options={
             "type": "formula",
             "criteria": '=AND(ISEVEN(ROW()),A2<>"")',
-            "format": workbook.add_format({"bg_color": "#F2F2F2"}),
+            "format": workbook.add_format(properties={"bg_color": "#F2F2F2"}),
         },
     )
 
@@ -170,14 +180,16 @@ def export_device_list(device_list: List, ENV: Dict) -> None:
     while True:
         try:
             workbook.close()
-            cprint("Exporting device list", "magenta")
-            cprint(f"INFO: '{workbook_title}' is saved in your PWD.\n", "blue")
+            cprint(text="Exporting device list", color="magenta")
+            cprint(
+                text=f"INFO: '{workbook_title}' is saved in your PWD.\n", color="blue"
+            )
         except FileCreateError as e:
             raise SystemExit(
                 colored(
-                    f"Exception caught in workbook.close(): {e}\n"
+                    text=f"Exception caught in workbook.close(): {e}\n"
                     f"Please close '{workbook_title}' file if it is already open in Microsoft Excel or in use by another program.",
-                    "red",
+                    color="red",
                 )
             )
         break

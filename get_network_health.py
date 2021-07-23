@@ -2,7 +2,7 @@
 
 import time
 from distutils.util import strtobool
-from typing import AnyStr, Dict
+from typing import Any, AnyStr, Dict, List
 
 import requests
 from requests.exceptions import ConnectionError, HTTPError
@@ -15,19 +15,31 @@ from urllib3.exceptions import InsecureRequestWarning
 urllib3.disable_warnings(category=InsecureRequestWarning)
 
 
-def get_network_health(token: AnyStr, ENV: Dict) -> Dict:
+def get_network_health(
+    token: AnyStr, ENV: Dict[AnyStr, Any]
+) -> List[Dict[AnyStr, Any]]:
     """Gets network health information
 
-    Args:
-        token (AnyStr): Cisco DNA Center Toekn
-        ENV (Dict): Environment Variables
+    Parameters
+    ----------
+    token : AnyStr
+        Auth token
+    ENV : Dict[AnyStr, Any]
+        Environment variables
 
-    Raises:
-        SystemExit: HTTP Errors
-        SystemExit: Keyboard Interrupt
+    Returns
+    -------
+    List[Dict[AnyStr, Any]]
+        Health of network devices
 
-    Returns:
-        Dict: Network health information
+    Raises
+    ------
+    SystemExit
+        HTTPError
+    SystemExit
+        ConnectionError
+    SystemExit
+        KeyboardInterrupt
     """
 
     headers = {
@@ -40,7 +52,7 @@ def get_network_health(token: AnyStr, ENV: Dict) -> Dict:
     NETWORK_HEALTH_URL = f"dna/intent/api/v1/network-health?timestamp={epoch_time}"
 
     try:
-        cprint("\nGetting network health", "magenta")
+        cprint(text="\nGetting network health", color="magenta")
         response = requests.get(
             url=f"{ENV['BASE_URL']}/{NETWORK_HEALTH_URL}",
             headers=headers,
@@ -49,11 +61,13 @@ def get_network_health(token: AnyStr, ENV: Dict) -> Dict:
         )
         response.raise_for_status()
     except HTTPError as e:
-        raise SystemExit(colored(e, "red"))
+        raise SystemExit(colored(text=e, color="red"))
     except ConnectionError as e:
-        raise SystemExit(colored(e, "red"))
+        raise SystemExit(colored(text=e, color="red"))
     except KeyboardInterrupt:
-        raise SystemExit(colored("Process interrupted by the user", "yellow"))
+        raise SystemExit(
+            colored(text="Process interrupted by the user", color="yellow")
+        )
     else:
-        cprint("The request was successful.\n", "green")
+        cprint(text="The request was successful.\n", color="green")
         return response.json()["healthDistirubution"]

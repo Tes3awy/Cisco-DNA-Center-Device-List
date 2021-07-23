@@ -2,19 +2,22 @@
 
 import os
 from datetime import date
-from typing import Dict
+from typing import Any, AnyStr, Dict, List
 
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 from termcolor import cprint
 
 
-def export_network_health(network_health: Dict, ENV: Dict) -> None:
+def export_network_health(network_health: List[Dict[AnyStr, Any]], ENV: Dict) -> None:
     """Exports network health into a matplotlib bar chart
 
-    Args:
-        network_health (Dict): Network health
-        ENV (Dict): Environment Variables
+    Parameters
+    ----------
+    network_health : List[Dict[AnyStr, Any]]
+        Health of network devices
+    ENV : Dict
+        Environment variables
     """
 
     # Values on x-axis
@@ -34,10 +37,9 @@ def export_network_health(network_health: Dict, ENV: Dict) -> None:
     FIG_NAME = ENV["DOMAIN"]
 
     # Check if net_health directory exists
-    if not os.path.exists(NET_HEALTH_DIR):
-        os.makedirs(NET_HEALTH_DIR)
+    if not os.path.exists(path=NET_HEALTH_DIR):
+        os.makedirs(name=NET_HEALTH_DIR)
 
-    # Today's date
     today = date.today()
 
     # Image to save
@@ -71,7 +73,8 @@ def export_network_health(network_health: Dict, ENV: Dict) -> None:
     red_patch = mpatches.Patch(color="red", label="Critical issues")
     orange_patch = mpatches.Patch(color="orange", label="Warnings")
     green_patch = mpatches.Patch(color="green", label="No errors or warning")
-    ax2.legend(handles=[red_patch, orange_patch, green_patch], loc="best")
+    color_patches = [red_patch, orange_patch, green_patch]
+    ax2.legend(handles=color_patches, loc="best")
 
     ax2.bar(categories, health_score, width=0.25, color=colors_list)
     ax2.set_title("Network Health")
@@ -81,5 +84,5 @@ def export_network_health(network_health: Dict, ENV: Dict) -> None:
     # Save plot to net_health/*.jpg
     plt.savefig(NET_HEALTH_FIG, dpi=300)
 
-    cprint("Exporting network health", "magenta")
-    cprint(f"Please check '{NET_HEALTH_FIG}'", "blue")
+    cprint(text="Exporting network health", color="magenta")
+    cprint(text=f"Please check '{NET_HEALTH_FIG}' chart", color="blue")
