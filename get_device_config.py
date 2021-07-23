@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from distutils.util import strtobool
-from typing import AnyStr, Dict
+from typing import Any, AnyStr, Dict, List
 
 import requests
 from requests.exceptions import ConnectionError, HTTPError
@@ -15,21 +15,32 @@ urllib3.disable_warnings(category=InsecureRequestWarning)
 
 
 # Export device configs to text files
-def get_device_config(token: AnyStr, ENV: Dict) -> Dict:
-    """Gets device configurations
+def get_device_config(
+    token: AnyStr, ENV: Dict[AnyStr, Any]
+) -> List[Dict[AnyStr, AnyStr]]:
+    """Gets running configuration of network devices
 
-    Args:
-        token (AnyStr): Cisco DNA Center Token
-        ENV (Dict): Environment Variables
+    Parameters
+    ----------
+    token : AnyStr
+        Auth token
+    ENV : Dict[AnyStr, Any]
+        Environment variables
 
-    Raises:
-        SystemExit: HTTP Errors
-        SystemExit: Keyboard Interrupt
+    Returns
+    -------
+    List[Dict[AnyStr, AnyStr]]
+        Configuration of network devices
 
-    Returns:
-        dict: Device condgurations
+    Raises
+    ------
+    SystemExit
+        HTTPError
+    SystemExit
+        ConnectionError
+    SystemExit
+        KeyboardInterrupt
     """
-
     headers = {
         "X-Auth-Token": token,
         "Content-Type": "application/json",
@@ -39,7 +50,7 @@ def get_device_config(token: AnyStr, ENV: Dict) -> Dict:
     DEVICE_CONFIG_URL = "dna/intent/api/v1/network-device/config"
 
     try:
-        cprint("Getting device configurations", "magenta")
+        cprint(text="Getting device configurations", color="magenta")
         response = requests.get(
             url=f"{ENV['BASE_URL']}/{DEVICE_CONFIG_URL}",
             headers=headers,
@@ -48,11 +59,13 @@ def get_device_config(token: AnyStr, ENV: Dict) -> Dict:
         )
         response.raise_for_status()
     except HTTPError as e:
-        raise SystemExit(colored(e, "red"))
+        raise SystemExit(colored(text=e, color="red"))
     except ConnectionError as e:
-        raise SystemExit(colored(e, "red"))
+        raise SystemExit(colored(text=e, color="red"))
     except KeyboardInterrupt:
-        raise SystemExit(colored("Process interrupted by the user", "yellow"))
+        raise SystemExit(
+            colored(text="Process interrupted by the user", color="yellow")
+        )
     else:
-        cprint("The request was successful.\n", "green")
+        cprint(text="The request was successful.\n", color="green")
         return response.json()["response"]
