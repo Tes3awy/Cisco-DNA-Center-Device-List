@@ -19,6 +19,7 @@
 # Import Modules
 import platform
 import time
+from datetime import timedelta
 
 from colorama import init
 from dotenv import dotenv_values
@@ -74,7 +75,8 @@ def main():
 
     # Print Elasped time
     end_time = time.perf_counter()
-    print(f"\nElapsed time: {round(end_time-start_time, 2)}")
+    delta = str(timedelta(seconds=end_time - start_time)).split(".")[0]
+    print(f"\nElapsed time: {delta}")
 
     # Send notification for Windows users ONLY
     if "Windows" in platform.system():
