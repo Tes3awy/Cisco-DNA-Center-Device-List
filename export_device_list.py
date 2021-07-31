@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from datetime import date
 from typing import Any, AnyStr, Dict, List
 
@@ -158,7 +156,7 @@ def export_device_list(
     )
 
     # Row and Column initial values
-    row, col = 1, 0
+    row, col = (1, 0)
 
     # Save each device in a seperate row
     for device in device_list:

@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from distutils.util import strtobool
 from typing import Any, AnyStr, Dict
 
@@ -31,9 +29,7 @@ def get_auth_token(ENV: Dict[AnyStr, Any]) -> AnyStr:
     Raises
     ------
     SystemExit
-        HTTPError
-    SystemExit
-        ConnectionError
+        ConnectionError, HTTPError
     SystemExit
         KeyboardInterrupt
     """
@@ -49,12 +45,11 @@ def get_auth_token(ENV: Dict[AnyStr, Any]) -> AnyStr:
             auth=BasicAuth(username=ENV["USERNAME"], password=ENV["PASSWORD"]),
             headers=headers,
             data=None,
-            verify=True if strtobool(val=ENV["SSL_CERTIFICATE"]) else False,
+            verify=bool(strtobool(val=ENV["SSL_CERTIFICATE"])),
         )
+
         response.raise_for_status()
-    except HTTPError as e:
-        raise SystemExit(colored(text=e, color="red"))
-    except ConnectionError as e:
+    except (ConnectionError, HTTPError) as e:
         raise SystemExit(colored(text=e, color="red"))
     except KeyboardInterrupt:
         raise SystemExit(

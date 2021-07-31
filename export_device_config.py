@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 from datetime import date
 from typing import Any, AnyStr, Dict, List
@@ -29,7 +27,7 @@ def export_device_config(
     CONFIGS_DIR = f'configs/{ENV["DOMAIN"]}/{today}'
     os.makedirs(name=f"{CONFIGS_DIR}", exist_ok=True)
 
-    cprint(text="Exporting device configurations", color="magenta")
+    cprint(text="Exporting device configurations...", color="magenta")
 
     for config in device_configs:
         cfg: AnyStr = config["runningConfig"]
@@ -38,4 +36,4 @@ def export_device_config(
         # Create a config file
         with open(file=os.path.join(CONFIGS_DIR, cfg_fname), mode="w") as cfg_file:
             cfg_file.write(cfg.lstrip())
-        cprint(text=f"'{cfg_fname}' config file was created successfully", color="cyan")
+        cprint(text=f"Created '{cfg_fname}' config file", color="cyan")

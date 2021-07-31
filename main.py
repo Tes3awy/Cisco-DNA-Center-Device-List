@@ -52,6 +52,7 @@ def main():
     # Start time
     start_time = time.perf_counter()
 
+    print(f'Running for {ENV["DOMAIN"]}')
     # Obtain the Cisco DNA Center Auth Token
     token = get_auth_token(ENV=ENV)
 
@@ -76,7 +77,7 @@ def main():
     # Print Elasped time
     end_time = time.perf_counter()
     delta = str(timedelta(seconds=end_time - start_time)).split(".")[0]
-    print(f"\nElapsed time: {delta}")
+    print(f"\nFinishd in {delta}")
 
     # Send notification for Windows users ONLY
     if "Windows" in platform.system():

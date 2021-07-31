@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 from datetime import date
 from typing import Any, AnyStr, Dict, List
