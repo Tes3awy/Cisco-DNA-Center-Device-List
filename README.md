@@ -1,15 +1,15 @@
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/Tes3awy/Cisco-DNA-Center-Device-List)
-![Language](https://img.shields.io/github/languages/top/Tes3awy/Cisco-DNA-Center-Device-List)
-[![Tested on Python 3.9.6](https://img.shields.io/badge/Python%203.8+-white.svg?logo=python)](https://www.python.org/downloads)
-[![Issues Open](https://img.shields.io/github/issues/Tes3awy/Cisco-DNA-Center-Device-List)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List/issues)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/Tes3awy/Cisco-DNA-Center-Device-List)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List/commits/main)
-![Last Commit](https://img.shields.io/github/last-commit/Tes3awy/Cisco-DNA-Center-Device-List)
-[![Code Size](https://img.shields.io/github/languages/code-size/Tes3awy/Cisco-DNA-Center-Device-List?color=green)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List)
-[![Contributions Welcome](https://img.shields.io/static/v1.svg?label=Contributions&message=Welcome&color=0059b3)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List/blob/main/CONTRIBUTING.md)
-[![License](https://img.shields.io/github/license/Tes3awy/Cisco-DNA-Center-Device-List)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
-[![Pre-Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Tested on Python 3.9.6](https://img.shields.io/badge/Python%203.8+-white.svg?color=black&logoColor=yellow&logo=python&style=flat-square)](https://www.python.org/downloads)
+![Language](https://img.shields.io/github/languages/top/Tes3awy/Cisco-DNA-Center-Device-List?label=Python&style=flat-square)
+[![Issues Open](https://img.shields.io/github/issues/Tes3awy/Cisco-DNA-Center-Device-List?style=flat-square)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List/issues)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/Tes3awy/Cisco-DNA-Center-Device-List?style=flat-square)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List/commits/main)
+![Last Commit](https://img.shields.io/github/last-commit/Tes3awy/Cisco-DNA-Center-Device-List?style=flat-square)
+[![Code Size](https://img.shields.io/github/languages/code-size/Tes3awy/Cisco-DNA-Center-Device-List?color=green&style=flat-square)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List)
+[![Contributions Welcome](https://img.shields.io/static/v1.svg?label=Contributions&message=Welcome&color=0059b3&style=flat-square)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List/blob/main/CONTRIBUTING.md)
+[![License](https://img.shields.io/github/license/Tes3awy/Cisco-DNA-Center-Device-List?color=purple&style=flat-square)](https://github.com/Tes3awy/Cisco-DNA-Center-Device-List)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?labelColor=ef8336&style=flat-square)](https://pycqa.github.io/isort/)
+[![Pre-Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white&style=flat-square)](https://github.com/pre-commit/pre-commit)
 
 # Cisco DNA Center Device List, Device Config, and Network Health
 
@@ -20,7 +20,7 @@ This program is designed to export a Cisco DNAC device list and save them to an 
 1. [Installation](#installation)
 2. [Getting Started](#getting-started)
 3. [Usage](#usage)
-4. [Collected Data from Response](#collected-data)
+4. [Collected Data from Device List Response](#collected-data)
 5. [Use it for your DNA Center](#use-it-for-your-dna-center)
 6. [References](#references)
 7. [Previews](#previews)
@@ -79,7 +79,7 @@ python main.py
 
 Voila :sparkles:! An Excel file is created automatically from the device list on Cisco DNAC in the current working directory, configuration files of those devices are created in `configs/<DOMAIN>/<today>/<config_id>_<today>.txt`, and a network health diagram **(a bar chart with a legend)** is created in `net_health/<BASE_URL>-<today>.jpg`.
 
-> Unlike handling text files, `XlsxWriter` library does not have the option of appending new data to a created Excel file. So every time you run the script, the Excel file will be overwritten.
+> Unlike handling text files, `XlsxWriter` library does not have the option of appending new data to an existing Excel file. So every time you run the script, the Excel file will be overwritten.
 
 > **NOTE:** You have to close the Excel program before re-running the script.
 
@@ -124,7 +124,7 @@ PORT=443
 BASE_URL=https://${DOMAIN}:${PORT}
 USERNAME=root
 PASSWORD=C1sco12345
-SSL_CERTIFICATE=False  # set to True ONLY if you have valid SSL certificate
+SSL_CERTIFICATE=False  # set to True ONLY if you have a valid SSL certificate
 ```
 
 ### References
