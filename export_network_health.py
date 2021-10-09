@@ -82,5 +82,5 @@ def export_network_health(network_health: List[Dict[AnyStr, Any]], ENV: Dict) ->
     # Save plot to net_health/*.jpg
     plt.savefig(NET_HEALTH_FIG, dpi=300)
 
-    cprint(text="Exporting network health", color="magenta")
+    cprint(text="Exporting network health...", color="magenta")
     cprint(text=f"Please check '{NET_HEALTH_FIG}' chart", color="blue")

@@ -178,10 +178,8 @@ def export_device_list(
     while True:
         try:
             workbook.close()
-            cprint(text="Exporting device list", color="magenta")
-            cprint(
-                text=f"INFO: '{workbook_title}' is saved in your PWD.\n", color="blue"
-            )
+            cprint(text="Exporting device list...", color="magenta")
+            cprint(text=f"'{workbook_title}' is saved in your PWD.\n", color="blue")
         except FileCreateError as e:
             raise SystemExit(
                 colored(

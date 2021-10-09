@@ -46,7 +46,7 @@ def get_device_config(
     DEVICE_CONFIG_URL = "dna/intent/api/v1/network-device/config"
 
     try:
-        cprint(text="Getting device configurations", color="magenta")
+        cprint(text="Getting device configurations...", color="magenta")
         response = requests.get(
             url=f"{ENV['BASE_URL']}/{DEVICE_CONFIG_URL}",
             headers=headers,

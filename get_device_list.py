@@ -44,7 +44,7 @@ def get_device_list(token: AnyStr, ENV: Dict[AnyStr, Any]) -> List[Dict[AnyStr, 
     DEVICE_LIST_URL = "dna/intent/api/v1/network-device/"
 
     try:
-        cprint(text="Getting device list", color="magenta")
+        cprint(text="Getting device list...", color="magenta")
         response = requests.get(
             url=f"{ENV['BASE_URL']}/{DEVICE_LIST_URL}",
             headers=headers,

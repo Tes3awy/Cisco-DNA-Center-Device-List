@@ -39,7 +39,7 @@ def get_auth_token(ENV: Dict[AnyStr, Any]) -> AnyStr:
     }
 
     try:
-        cprint(text="Generating auth token", color="magenta")
+        cprint(text="Generating auth token...", color="magenta")
         response = requests.post(
             url=f"{ENV['BASE_URL']}/dna/system/api/v1/auth/token",
             auth=BasicAuth(username=ENV["USERNAME"], password=ENV["PASSWORD"]),

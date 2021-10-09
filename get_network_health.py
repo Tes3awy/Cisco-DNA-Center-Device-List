@@ -48,7 +48,7 @@ def get_network_health(
     NETWORK_HEALTH_URL = f"dna/intent/api/v1/network-health?timestamp={epoch_time}"
 
     try:
-        cprint(text="\nGetting network health", color="magenta")
+        cprint(text="\nGetting network health...", color="magenta")
         response = requests.get(
             url=f"{ENV['BASE_URL']}/{NETWORK_HEALTH_URL}",
             headers=headers,
